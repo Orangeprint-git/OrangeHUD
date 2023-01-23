@@ -53,6 +53,20 @@ IF '%choice%'=='' GOTO no
 ECHO.
 GOTO start
 :no
+echo.
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
+  set "DEL=%%a"
+)
+call :colorEcho 04 "Cancelled -"
+echo.
+
+:colorEcho
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1i
+
+
+pause
 EXIT
 
 :yes
@@ -64,7 +78,18 @@ powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath
 
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
-echo Finished.
+echo.
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
+  set "DEL=%%a"
+)
+call :colorEcho 0a "Finished -"
+echo.
+
+:colorEcho
+echo off
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1i
                                    
 PAUSE
 start "" "steam://rungameid/440"

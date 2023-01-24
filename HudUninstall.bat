@@ -74,7 +74,8 @@ EXIT
 
 :yes
 taskkill /IM hl2.exe /F
-del "%cd%" /s /f /q
+for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+del "%ParentFolderName%\OrangeHUD-main" /s /f /q
 
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------

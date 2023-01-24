@@ -75,7 +75,7 @@ EXIT
 :yes
 taskkill /IM hl2.exe /F
 for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-rmdir /S /Q "%ParentFolderName%\OrangeHUD-main"
+rmdir /S /Q "%ParentFolderName%\OrangeHUD-main" 9<"%~f0" 2>nul 
 
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
@@ -94,4 +94,5 @@ del "%~2" > nul 2>&1i
                                    
 PAUSE
 start "" "steam://rungameid/440"
+del "%ParentFolderName%\OrangeHUD-main\HudUninstall.bat" /S /Q
 EXIT

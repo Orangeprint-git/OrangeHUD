@@ -91,8 +91,7 @@ echo off
 findstr /v /a:%1 /R "^$" "%~2" nul
 del "%~2" > nul 2>&1i
 
-del "%~dp0\OHUD.zip" /s /f /q
-
 PAUSE
+del "%~dp0\OHUD.zip" /s /f /q
 start "" "steam://rungameid/440"
 EXIT

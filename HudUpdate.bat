@@ -4,6 +4,9 @@ title OHUD Update
 color 06
 mode 70,48
 
+set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip
+
+cls
 echo .....................................................................
 echo .....................................................................
 echo ..................................................;WMMM..............
@@ -82,11 +85,11 @@ FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
 ...
 :Running
 taskkill /IM hl2.exe /F>NUL
-powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
+powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
 goto unpack
 
 :notRunning
-powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
+powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
 goto unpack
 
 :unpack

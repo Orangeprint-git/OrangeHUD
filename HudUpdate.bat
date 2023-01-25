@@ -56,7 +56,7 @@ For %%A in ("%filename%") do (
     echo.
 	echo %%~dA\...%%~pA"
 	echo.
-findstr /m "UpdateVer" "UpdateLogOld.txt"2>nul >nul
+findstr /m "UpdateVer" "UpdateLogOld.txt" 2>nul >nul
 if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer=%%e
 for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
@@ -64,7 +64,7 @@ echo Currently installed [32m!UpdateVer![33m
 )
 echo Installed: %%~tA)
 echo.
-findstr /m "UpdateVer" "UpdateLog.txt"2>nul >nul
+findstr /m "UpdateVer" "UpdateLog.txt" 2>nul >nul
 if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%e
 for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f

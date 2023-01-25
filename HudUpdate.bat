@@ -4,7 +4,18 @@ title OHUD Update
 color 06
 mode 70,48
 
-set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip
+
+IF exist %cd%\UpdateLog.txt (
+    ren "%cd%\UpdateLog.txt" "%cd%\UpdateLog-old.txt"
+) ELSE (
+    echo " "
+)
+
+powershell -Command "Invoke-WebRequest %log% -Outfile UpdateLog.txt"
+
+set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
+set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
+set log=https://github.com/Orangeprint-git/OrangeHUD/raw/59c8e8dc2f7635e912963b37a7cdce8160b5738d/UpdateLog.txt
 
 cls
 echo .....................................................................
@@ -58,6 +69,7 @@ for /f "tokens=1,* delims=:" %%a in ('findstr "UpdateVer" "UpdateLog.txt"') do s
 for /f "tokens=* delims= " %%c in ("!UpdateVer!") do set UpdateVer=%%c
 echo Version: !UpdateVer!
 )
+echo License: @Creative Commons Zero v1.0 UL.
 	
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
@@ -70,6 +82,17 @@ IF '%choice%'=='y' GOTO yes
 IF '%choice%'=='N' GOTO no
 IF '%choice%'=='n' GOTO no
 IF '%choice%'=='' GOTO no
+IF '%choice%'=='g' GOTO git
+IF '%choice%'=='G GOTO git
+IF '%choice%'=='git GOTO git
+IF '%choice%'=='Git' GOTO git
+IF '%choice%'=='GIT' GOTO git
+IF '%choice%'=='Gi' GOTO git
+IF '%choice%'=='GI' GOTO git
+
+:git
+start "" %gitlink%
+goto startcls
 
 :yes
 @echo off

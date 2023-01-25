@@ -4,13 +4,13 @@ title OHUD Update
 color 06
 mode 70,48
 
-MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"
-
-powershell -Command "Invoke-WebRequest %log% -Outfile UpdateLog.txt"
-
 set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 set log=https://github.com/Orangeprint-git/OrangeHUD/raw/59c8e8dc2f7635e912963b37a7cdce8160b5738d/UpdateLog.txt
+
+MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"
+
+powershell -Command "Invoke-WebRequest %log% -Outfile UpdateLog.txt"
 
 cls
 echo .....................................................................

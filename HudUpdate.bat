@@ -71,7 +71,7 @@ IF '%choice%'=='' GOTO no
 :yes
 @echo off
 SETLOCAL EnableExtensions
-SET EXE=notepad.exe
+SET EXE=hl2.exe
 REM for testing
 REM SET EXE=svchost.exe
 FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
@@ -81,7 +81,7 @@ FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
 )
 ...
 :Running
-taskkill /IM notepad.exe /F>NUL
+taskkill /IM hl2.exe /F>NUL
 powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
 goto unpack
 

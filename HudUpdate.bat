@@ -4,12 +4,7 @@ title OHUD Update
 color 06
 mode 70,48
 
-
-IF exist %cd%\UpdateLog.txt (
-    ren "%cd%\UpdateLog.txt" "UpdateLog-old.txt"
-) ELSE (
-    echo " "
-)
+MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"
 
 powershell -Command "Invoke-WebRequest %log% -Outfile UpdateLog.txt"
 
@@ -63,12 +58,23 @@ For %%A in ("%filename%") do (
 	echo.
     echo Installed: %%~tA)
 	echo.
+echo.
 findstr /m "UpdateVer" "UpdateLog.txt"
 if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%a in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%b
-for /f "tokens=* delims= " %%c in ("!UpdateVer!") do set UpdateVer=%%c
-echo Version: !UpdateVer!
+for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%e
+for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
+echo Newest Version: [32m!UpdateVer![33m
 )
+
+
+echo.
+findstr /m "UpdateVer" "UpdateLogOld.txt"
+if %errorlevel%==0 (
+for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer=%%e
+for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
+echo Current Version: [91m!UpdateVer![33m
+)
+echo.
 echo License: @Creative Commons Zero v1.0 UL.
 	
 echo _____________________________________________________________________

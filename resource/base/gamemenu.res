@@ -210,4 +210,39 @@
 		"subimage"		"replay/thumbnails/icons/icon_OHUD"
 		"tooltip"		"Achievements"
 	}
+	
+	"ReloadHUDButton"
+	{
+		"label"			""
+		"command"		"engine toggle mat_antialias 0 1; coreload"
+		"OnlyInGame"	"0"
+		"subimage"		"replay/thumbnails/icons/icon_RLHUD"
+		"tooltip"		"Reload HUD"
+	}
+	
+	//__________________________________________________
+	//____________________ tooltips ____________________
+	//--------------------------------------------------
+	
+	"UtilButton_tooltip"
+	{
+		"label"			""
+		"command"		"engine"
+		"OnlyInGame"	"0"
+		"subimage"		"replay/thumbnails/icons/icon_QM"
+		"tooltip"		"Hud Utility and Settings"
+	}
+	
+	//__________________________________________________
+	//__________________ Logo button ___________________
+	//--------------------------------------------------
+	
+	"LogoButton"
+	{
+		"label"			""
+		"command"		"engine clear; Orange; +con"
+		"OnlyInGame"	"0"
+		"subimage"		"replay/thumbnails/icons/icon_QM"
+		"tooltip"		"Hud Utility and Settings"
+	}
 }

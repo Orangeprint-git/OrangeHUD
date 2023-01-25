@@ -6,7 +6,7 @@ mode 70,48
 
 
 IF exist %cd%\UpdateLog.txt (
-    ren "%cd%\UpdateLog.txt" "%cd%\UpdateLog-old.txt"
+    ren "%cd%\UpdateLog.txt" "UpdateLog-old.txt"
 ) ELSE (
     echo " "
 )

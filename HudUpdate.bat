@@ -6,11 +6,11 @@ mode 70,48
 
 set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
-set log=https://github.com/Orangeprint-git/OrangeHUD/raw/59c8e8dc2f7635e912963b37a7cdce8160b5738d/UpdateLog.txt
+set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 
 MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"2>nul >nul
 
-powershell -Command "Invoke-WebRequest %log% -Outfile UpdateLog.txt"
+powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 
 cls
 echo .....................................................................

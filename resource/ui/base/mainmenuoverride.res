@@ -4782,55 +4782,72 @@
 			"scaleImage"	"1"
 			"image"			"glyph_quit"
 		}				
-	}
+	} 
 	
-	"HudloadButton"
+	"ReloadHUDButton"
 	{
-		"ControlName"	"CExImageButton"
-		"fieldName"		"HudloadButton"
+		"ControlName"	"EditablePanel"
+		"fieldname"		"ReloadHUDButton"
 		"xpos"			"235"
 		"ypos"			"430"
 		"zpos"			"400"
 		"wide"			"25"
 		"tall"			"25"
-		"autoResize"	"0"
-		"pinCorner"		"3"
 		"visible"		"1"
-		"enabled"		"1"
-		"tabPosition"	"0"
-		"labelText"		""
-		"font"			"HudFontSmallBold"
-		"textAlignment"	"center"
-		"dulltext"		"0"
-		"brighttext"	"0"
-		"default"		"1"
-		"Command"		"engine toggle mat_antialias 0 1; +recload"
-		
-					"defaultFgColor_override" "244 232 198 255"
+
+		"SubButton"
+		{
+			"ControlName"	"CExImageButton"
+			"fieldName"		"SubButton"
+			"ControlName"	"CExImageButton"
+			"fieldName"		"SubButton"
+			"xpos"			"0"
+			"ypos"			"0"
+			"wide"			"p1"
+			"tall"			"25"
+			"autoResize"	"0"
+			"pinCorner"		"3"
+			"visible"		"1"
+			"enabled"		"1"
+			"tabPosition"	"0"
+			"textinsetx"	"27"
+			"use_proportional_insets" "1"
+			"font"			"HudFontSmallBold"
+			"textAlignment"	"west"
+			"dulltext"		"0"
+			"brighttext"	"0"
+			"default"		"1"
+			"sound_depressed"	"UI/buttonclick.wav"
+			"sound_released"	"UI/buttonclickrelease.wav"
+			
+			"paintbackground"	"1"
+			
+			"defaultFgColor_override" "244 232 198 255"
 			"armedFgColor_override" "244 232 198 255"
 			"depressedFgColor_override" "40 40 45 255"
 			"armedBgColor_override"	"Orange"
-
-
-		"sound_depressed"	"UI/buttonclick.wav"
-		"sound_released"	"UI/buttonclickrelease.wav"
-		
-		"image_drawcolor"	"235 226 202 255"
-		"SubImage"
-		{
-			"ControlName"	"ImagePanel"
-			"fieldName"		"SubImage"
-			"xpos"			"2"
-			"ypos"			"2"
-			"zpos"			"1"
-			"wide"			"22"
-			"tall"			"22"
-			"visible"		"1"
-			"enabled"		"1"
-			"image"			"replay/thumbnails/icons/icon_RLHUD"
-			"scaleImage"	"1"
-		}				
-	} 
+			
+			"image_drawcolor"	"235 226 202 255"
+			"image_armedcolor"	"235 226 202 255"
+			"proportionaltoparent"	"1"
+			
+			"SubImage"
+			{
+				"ControlName"	"AnimatedImagePanel"
+				"fieldName"		"SubImage"
+				"xpos"			"1"
+				"ypos"			"1"
+				"zpos"			"1"
+				"wide"			"23"
+				"tall"			"23"
+				"visible"		"1"
+				"enabled"		"1"
+				"image"			"glyph_create"
+				"scaleImage"	"1"
+				"proportionaltoparent"	"1"
+			}				
+		}
+	}
 	
 	"RetryButton"
 	{
@@ -6287,6 +6304,150 @@
 		}				
 	}
 	
+	//__________________________________________________
+	//____________________ tooltips ____________________
+	//--------------------------------------------------
+	
+	"UtilButton_tooltip" 
+	{
+		"ControlName"	"EditablePanel"
+		"fieldname"		"UtilButton_tooltip"
+		"xpos"			"202"
+		"ypos"			"1"
+		"zpos"			"19008"
+		"wide"			"7"
+		"tall"			"7"
+		"visible"		"1"
+
+		"navLeft"		"MutePlayersButton"
+		"navRight"		"Notifications_ShowButtonPanel"
+		"navDown"		"QuickplayChangeButton"
+		"navToRelay"	"SubButton"
+
+		"SubButton"
+		{
+			"ControlName"	"CExImageButton"
+			"fieldName"		"SubButton"
+			"xpos"			"0"
+			"ypos"			"0"
+			"wide"			"p1"
+			"tall"			"25"
+			"autoResize"	"0"
+			"pinCorner"		"3"
+			"visible"		"1"
+			"enabled"		"1"
+			"tabPosition"	"0"
+			"textinsetx"	"27"
+			"use_proportional_insets" "1"
+			"font"			"HudFontSmallBold"
+			"textAlignment"	"west"
+			"dulltext"		"0"
+			"brighttext"	"0"
+			"default"		"1"
+			"sound_depressed"	"UI/buttonclick.wav"
+			"sound_released"	"UI/buttonclickrelease.wav"
+			
+			
+			"paintbackground"	"0"
+			
+			"defaultFgColor_override" "244 232 198 255"
+			"armedFgColor_override" "244 232 198 255"
+			"depressedFgColor_override" "40 40 45 255"
+			"armedBgColor_override"	"Orange"
+			
+			"image_drawcolor"	"235 226 202 255"
+			"image_armedcolor"	"235 226 202 255"
+			"proportionaltoparent"	"1"
+			
+			"SubImage"
+			{
+				"ControlName"	"ImagePanel"
+				"fieldName"		"SubImage"
+				"xpos"			"0"
+				"ypos"			"0"
+				"zpos"			"1"
+				"wide"			"7"
+				"tall"			"7"
+				"visible"		"1"
+				"enabled"		"1"
+				"image"			"glyph_create"
+				"scaleImage"	"1"
+				"proportionaltoparent"	"1"
+			}				
+		}
+	}
+	
+	//__________________________________________________
+	//__________________ Logo Button ___________________
+	//--------------------------------------------------
+	
+	"LogoButton" 
+	{
+		"ControlName"	"EditablePanel"
+		"fieldname"		"LogoButton"
+		"xpos"			"c-420"
+		"ypos"			"40"
+		"zpos"			"12"
+		"wide"			"280"
+		"tall"			"120"
+		"visible"		"1"
+
+		"navLeft"		"MutePlayersButton"
+		"navRight"		"Notifications_ShowButtonPanel"
+		"navDown"		"QuickplayChangeButton"
+		"navToRelay"	"SubButton"
+
+		"SubButton"
+		{
+			"ControlName"	"CExImageButton"
+			"fieldName"		"SubButton"
+			"xpos"			"0"
+			"ypos"			"0"
+			"wide"			"p1"
+			"tall"			"50"
+			"autoResize"	"0"
+			"pinCorner"		"3"
+			"visible"		"1"
+			"enabled"		"1"
+			"tabPosition"	"0"
+			"textinsetx"	"27"
+			"use_proportional_insets" "1"
+			"font"			"HudFontSmallBold"
+			"textAlignment"	"west"
+			"dulltext"		"0"
+			"brighttext"	"0"
+			"default"		"1"
+			"sound_depressed"	"UI/buttonclick.wav"
+			"sound_released"	"UI/buttonclickrelease.wav"
+			
+			
+			"paintbackground"	"0"
+			
+			"proportionaltoparent"	"1"
+			
+			"SubImage"
+			{
+				"ControlName"	"ImagePanel"
+				"fieldName"		"SubImage"
+				"xpos"			"2"
+				"ypos"			"2"
+				"zpos"			"1"
+				"wide"			"21"
+				"tall"			"21"
+				"visible"		"0"
+				"enabled"		"0"
+				"image"			"glyph_create"
+				"scaleImage"	"1"
+				"proportionaltoparent"	"1"
+			}				
+		}
+	}
+	
+	//__________________________________________________
+	//________________ rotating orange _________________
+	//--------------------------------------------------
+	
+	
 	"Orange_rotating"
 	{
 		"ControlName"	"ImagePanel"
@@ -6296,29 +6457,15 @@
 		"zpos"			"100"
 		"wide"			"50"
 		"tall"			"50"
-		"visible"		"1"
-		"enabled"		"1"
 		"image"			"replay/thumbnails/icons/icon_orange_rotate"
 		"scaleImage"	"1"
 		"mouseinputenabled"	"0"
+		"visible"		"1"
+		"enabled"		"1"
 	}
 	
-	"button_ovl_1"
-	{
-		"ControlName"	"ImagePanel"
-		"fieldName"		"button_ovl_1"
-		"xpos"			"c-191"
-		"ypos"			"c4"
-		"zpos"			"120"
-		"wide"			"25"
-		"tall"			"24"
-		"visible"		"0"
-		"enabled"		"1"
-		"image"			"replay/thumbnails/menu/button_ovl_1"
-		"scaleImage"	"1"
-		"mouseinputenabled"	"0"
-		"image_drawcolor"	"40 40 45 255"
-	}
+	//__________________________________________________
+	//--------------------------------------------------
 	
 	"DashboardDimmer"
 	{

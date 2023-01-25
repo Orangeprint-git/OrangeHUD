@@ -8,7 +8,7 @@ set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 set log=https://github.com/Orangeprint-git/OrangeHUD/raw/59c8e8dc2f7635e912963b37a7cdce8160b5738d/UpdateLog.txt
 
-MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"
+MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"2>nul >nul
 
 powershell -Command "Invoke-WebRequest %log% -Outfile UpdateLog.txt"
 
@@ -58,15 +58,19 @@ For %%A in ("%filename%") do (
 	echo.
     echo Installed: %%~tA)
 	echo.
+findstr /m "UpdateVer" "UpdateLogOld.txt"2>nul >nul
+if %errorlevel%==0 (
+for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer=%%e
+for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
+echo Currently installed [32m!UpdateVer![33m
+)
 echo.
-findstr /m "UpdateVer" "UpdateLog.txt"
+findstr /m "UpdateVer" "UpdateLog.txt"2>nul >nul
 if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%e
 for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
-echo Newest Version: [32m!UpdateVer![33m
+echo Newest Github Version: [32m!UpdateVer![33m
 )
-echo.
-echo License: @Creative Commons Zero v1.0 UL.
 	
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------

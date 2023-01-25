@@ -56,14 +56,13 @@ For %%A in ("%filename%") do (
     echo.
 	echo %%~dA\...%%~pA"
 	echo.
-    echo Installed: %%~tA)
-	echo.
 findstr /m "UpdateVer" "UpdateLogOld.txt"2>nul >nul
 if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer=%%e
 for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
 echo Currently installed [32m!UpdateVer![33m
 )
+echo Installed: %%~tA)
 echo.
 findstr /m "UpdateVer" "UpdateLog.txt"2>nul >nul
 if %errorlevel%==0 (
@@ -71,12 +70,13 @@ for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLog.txt"') do s
 for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
 echo Newest Github Version: [32m!UpdateVer![33m
 )
+echo Github: %gitlink%
 	
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 :start
 SET choice=
-SET /p choice=Proceed? [Y/N]: 
+SET /p choice=Proceed? [Y/N/GIT]: 
 IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 IF '%choice%'=='Y' GOTO yes
 IF '%choice%'=='y' GOTO yes

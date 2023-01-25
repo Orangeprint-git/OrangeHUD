@@ -97,6 +97,7 @@
 			"dulltext"		"0"
 			"brighttext"	"0"
 			"Command"		"engine buttest"
+			"tooltip"		"tooltip"
 			"actionsignallevel" "3"
 			"sound_depressed"			"UI/buttonclick.wav"
 			"sound_released"			"UI/buttonclickrelease.wav"
@@ -138,10 +139,7 @@
 				"textAlignment"	"west"
 				"font"			"DSDigital"
 				"urltext"		"C:\Windows\System32\calc.exe"
-				"defaultFgColor_override" "244 232 198 255"
-				"armedFgColor_override" "244 232 198 255"
-				"depressedFgColor_override" "40 40 45 255"
-				"armedBgColor_override"	"Orange"
+				"FgColor_override" "244 232 198 255"
 			}
 		}
 		
@@ -174,10 +172,7 @@
 				"textAlignment"	"west"
 				"font"			"DSDigital"
 				"urltext"		"tf\custom\OrangeHUD-main\HudUpdate.bat"
-				"defaultFgColor_override" "244 232 198 255"
-				"armedFgColor_override" "244 232 198 255"
-				"depressedFgColor_override" "40 40 45 255"
-				"armedBgColor_override"	"Orange"
+				"FgColor_override" "244 232 198 255"
 			}
 		}
 	}

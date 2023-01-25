@@ -65,15 +65,6 @@ for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLog.txt"') do s
 for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
 echo Newest Version: [32m!UpdateVer![33m
 )
-
-
-echo.
-findstr /m "UpdateVer" "UpdateLogOld.txt"
-if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer=%%e
-for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
-echo Current Version: [91m!UpdateVer![33m
-)
 echo.
 echo License: @Creative Commons Zero v1.0 UL.
 	

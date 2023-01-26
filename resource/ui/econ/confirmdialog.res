@@ -97,7 +97,6 @@
 			"dulltext"		"0"
 			"brighttext"	"0"
 			"Command"		"engine buttest"
-			"tooltip"		"tooltip"
 			"actionsignallevel" "3"
 			"sound_depressed"			"UI/buttonclick.wav"
 			"sound_released"			"UI/buttonclickrelease.wav"
@@ -109,72 +108,8 @@
 			"image_drawcolor"	"235 226 202 255"
 			"image_armedcolor"	"235 226 202 255"
 		}
+	
 		
-		"CalculatorButton"
-		{
-			"ControlName"	"EditablePanel"
-			"fieldName"		"CalculatorButton"
-			"xpos"			"10"
-			"ypos"			"60"
-			"zpos"			"100"
-			"wide"			"85"
-			"tall"			"20"
-			"BgColor_override"	"0 0 0 80"
-			"PaintBackgroundType"	"2"
-			
-			
-		
-			"calculator"
-			{
-				"ControlName"	"URLLabel"
-				"fieldName"		"calculator"
-				"xpos"			"0"
-				"ypos"			"0"
-				"zpos"			"100"
-				"wide"			"80"
-				"tall"			"25"
-				"labeltext"		"Calculator"
-				"textinsetx"	"15"
-				"textinsety"	"-5"
-				"textAlignment"	"west"
-				"font"			"DSDigital"
-				"urltext"		"C:\Windows\System32\calc.exe"
-				"FgColor_override" "244 232 198 255"
-			}
-		}
-		
-		"HudUpdateButton"
-		{
-			"ControlName"	"EditablePanel"
-			"fieldName"		"HudUpdateButton"
-			"xpos"			"10"
-			"ypos"			"80"
-			"zpos"			"100"
-			"wide"			"85"
-			"tall"			"20"
-			"BgColor_override"	"0 0 0 80"
-			"PaintBackgroundType"	"2"
-			
-			
-		
-			"Updater"
-			{
-				"ControlName"	"URLLabel"
-				"fieldName"		"Updater"
-				"xpos"			"0"
-				"ypos"			"0"
-				"zpos"			"100"
-				"wide"			"80"
-				"tall"			"25"
-				"labeltext"		"Hud Update"
-				"textinsetx"	"15"
-				"textinsety"	"-5"
-				"textAlignment"	"west"
-				"font"			"DSDigital"
-				"urltext"		"tf\custom\OrangeHUD-main\HudUpdate.bat"
-				"FgColor_override" "244 232 198 255"
-			}
-		}
 	}
 	
 	"CancelButton_new"

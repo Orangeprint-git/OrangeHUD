@@ -9,10 +9,8 @@ set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.
 set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 
 MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"2>nul >nul
-
 powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 
-cls
 echo .....................................................................
 echo .....................................................................
 echo ..................................................;WMMM..............
@@ -50,57 +48,39 @@ echo ________________ UPDATING FILES IN CURRENT DIRECTORY ________________
 echo ---------------------------------------------------------------------
 
 
-for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-set "filename=%ParentFolderName%\OrangeHUD-main"
-For %%A in ("%filename%") do (
-    echo.
-	echo %%~dA\...%%~pA"
-	echo.
-findstr /m "UpdateVer" "UpdateLogOld.txt" 2>nul >nul
+
+findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer=%%e
-for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
-echo Currently installed [32m!UpdateVer![33m
+for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
 )
-echo Installed: %%~tA)
+
+findstr "UpdateVer" "UpdateLogOld.txt" 2>nul >nul
+if %errorlevel%==0 (
+for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer2=%%h
+)
+
+echo currently installed:
+if %UpdateVer2% GEQ %UpdateVer% (echo %UpdateVer2% [32mUP TO DATE[33m) ELSE (echo %UpdateVer2% [31mOUTDATED[33m)
 echo.
-findstr /m "UpdateVer" "UpdateLog.txt" 2>nul >nul
-if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%d in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%e
-for /f "tokens=* delims= " %%f in ("!UpdateVer!") do set UpdateVer=%%f
-echo Newest Github Version: [32m!UpdateVer![33m
-)
-echo Github: %gitlink%
+echo newest github version:
+echo %UpdateVer%
 	
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 :start
 SET choice=
-SET /p choice=Proceed? [Y/N/GIT]: 
+SET /p choice=Proceed? [Y/N]: 
 IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 IF '%choice%'=='Y' GOTO yes
 IF '%choice%'=='y' GOTO yes
 IF '%choice%'=='N' GOTO no
 IF '%choice%'=='n' GOTO no
 IF '%choice%'=='' GOTO no
-IF '%choice%'=='g' GOTO git
-IF '%choice%'=='G GOTO git
-IF '%choice%'=='git GOTO git
-IF '%choice%'=='Git' GOTO git
-IF '%choice%'=='GIT' GOTO git
-IF '%choice%'=='Gi' GOTO git
-IF '%choice%'=='GI' GOTO git
-
-:git
-start "" %gitlink%
-goto startcls
 
 :yes
 @echo off
 SETLOCAL EnableExtensions
 SET EXE=hl2.exe
-REM for testing
-REM SET EXE=svchost.exe
 FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
   GOTO notRunning
 ) ELSE (
@@ -109,11 +89,11 @@ FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
 ...
 :Running
 taskkill /IM hl2.exe /F>NUL
-powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
+powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
 goto unpack
 
 :notRunning
-powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
+powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
 goto unpack
 
 :unpack

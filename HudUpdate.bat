@@ -171,13 +171,13 @@ echo off
 <nul set /p ".=%DEL%" > "%~2"
 findstr /v /a:%1 /R "^$" "%~2" nul
 del "%~2" > nul 2>&1i
-MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 echo.
 echo.
 echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
+MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 pause
 start "" "steam://rungameid/440"
 del "%~dp0\OHUD.zip" /s /f /q

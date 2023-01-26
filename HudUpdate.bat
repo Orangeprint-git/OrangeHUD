@@ -214,8 +214,8 @@ echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
-MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 pause
+MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 start "" "steam://rungameid/440"
 del "%~dp0\OHUD.zip" /s /f /q
 exit

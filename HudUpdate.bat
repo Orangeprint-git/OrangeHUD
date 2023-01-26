@@ -9,7 +9,6 @@ set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.
 set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 
 del "%~dp0\"UpdateLog.txt 2>nul >nul
-:startrllog
 powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 
 :startcls
@@ -94,15 +93,16 @@ for %%I in (
 	
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
-:start
+
 SET choice=
-SET /p choice=Proceed? [Y/N/GIT]: 
+SET /p choice=Proceed? [ Y/N/ HELP ]: 
+
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yes
 	IF '%choice%'=='y' GOTO yes
 	IF '%choice%'=='N' GOTO no
 	IF '%choice%'=='n' GOTO no
-	IF '%choice%'=='' GOTO no
+	
 	IF '%choice%'=='g' GOTO git
 	IF '%choice%'=='G GOTO git
 	IF '%choice%'=='git GOTO git
@@ -110,6 +110,34 @@ SET /p choice=Proceed? [Y/N/GIT]:
 	IF '%choice%'=='GIT' GOTO git
 	IF '%choice%'=='Gi' GOTO git
 	IF '%choice%'=='GI' GOTO git
+	
+	IF '%choice%'=='r' GOTO Resources
+	IF '%choice%'=='R' GOTO Resources
+	IF '%choice%'=='re GOTO Resources
+	IF '%choice%'=='RE' GOTO Resources
+	IF '%choice%'=='res' GOTO Resources
+	IF '%choice%'=='RES' GOTO Resources
+	
+	IF '%choice%'=='' GOTO no
+	
+	IF '%choice%'=='rl' GOTO rvd
+	IF '%choice%'=='RL' GOTO rvd	
+	
+	IF '%choice%'=='q' GOTO exit
+	IF '%choice%'=='Q' GOTO exit
+	IF '%choice%'=='quit' GOTO exit
+	IF '%choice%'=='QUIT' GOTO exit
+	
+	IF '%choice%'=='h' GOTO help
+	IF '%choice%'=='H' GOTO help
+	IF '%choice%'=='help' GOTO help
+	IF '%choice%'=='HELP' GOTO help
+
+:rvd
+SETLOCAL EnableDelayedExpansion
+powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
+GOTO startcls
+
 
 :git
 	start "" %gitlink%
@@ -194,6 +222,74 @@ exit
 
 
 
+:Resources
+cls
+echo .....................................................................
+echo .....................................................................
+echo ..................................................;WMMM..............
+echo ................................................7aZ@M@MM.............
+echo .............................................r2Xi;..7MWMM............
+echo ..........................................i2Xi:::::..7MWMM...........
+echo .......................................;XSii::,i::::;.XMW@M..........
+echo .....................................rS;::::::::i:i::..aMB@M.........
+echo ..................................XMZ;;ii::i:iii:i;;.,.;MWBMM........
+echo ...............................;MMMMM2;i;ii:i:i:i:i:i:,;MMWBMM.......
+echo ............................;MMMMMMWMX.............;.;.;;0MBBM;......
+echo ..........................Sa7:Z@.,M7.:7;;...;.;.;;;.;.....MWBWM......
+echo .......................raX;i::7;...Z...:ii;;.;.;;;;;.;....2MBWMX.....
+echo ....................;SS;iiiiii;..;.;X.....:,,.;.;;;.;.;.;.rMBB@M.....
+echo ..................Sa;iiiiiiii;..;i;.:i.;.;.;;;;;;;;;.;.;..iMBBBM.....
+echo ...............;aX;i;iiiii;i;:..;:i..;;.;.;.;.;;;;;.;.;...rMB0BM;....
+echo ............;MMZ.,iiiii;;i:ri;.;.;.;.;;;.;.;.;.;.;;:;;....2MBBBMi....
+echo ..........XWMMM@i.;;iiii;..:..;.;.;;;.::..;.;;;;;.;;;;::.;@WBBWM.....
+echo ........Z2..:WMMMa,..::;.....;.;;;.;.;.i;.;;.;.;;;;;...;WM@B0BMM.....
+echo ......Z2;.....;MMMMai.;.....;.;.;.;;;;;.r;..;;;.;;;;;...ZMB0BWM......
+echo .....W;.........SMMMMW2r..;;...;;;.;;;;.;7...;.;.;;;...:BWBBBM7......
+echo ....0;:;..........ZMMMMMM8M:....;.;.;;;..iX...;.;.....;BMBBWMS.......
+echo .....ZSiir..........aMMMMMM@7........;....rr........iaMMBWMMi........
+echo .......ZXi;;..........XMMMMMMMX;...........@i....;XWMM@B@MM..........
+echo ........:87;i...........;SMMMMMMM@ZSr;;XXZ8MM@0BWMMMW@@MMi...........
+echo ..........,ZS;;.............rSWMMMMMMMMMMMMMMMMMMMMMMMM;.............
+echo .............aZX;.................;irSaBWMMMMMWBS72BZ................
+echo ...............;8a;.............................iXr..................
+echo ..................iaaXi.....................i77i.....................
+echo ......................;ii;;iiii:::i:i:;i;;;..........................
+echo .....................................................................
+echo .....................................................................
+echo _____________________________________________________________________    
+echo _____________________ OHUD UPDATE SUCCESSFUL ________________________
+echo ---------------------------------------------------------------------
+echo.
+echo.
+
+echo             psd files and other materials created for for hud.
+echo                 THESE FILES HAVE NOT BEEN SET UP YET
+echo.
+echo.
+echo.
+echo _____________________________________________________________________
+echo ---------------------------------------------------------------------
+SET choice=
+SET /p choice=Proceed? [ Y/N/ HELP ]: 
+
+	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
+	IF '%choice%'=='Y' GOTO resyes
+	IF '%choice%'=='y' GOTO resyes
+	IF '%choice%'=='N' GOTO startcls
+	IF '%choice%'=='b' GOTO startcls
+	IF '%choice%'=='B' GOTO startcls
+	IF '%choice%'=='back' GOTO startcls
+	IF '%choice%'=='BACK' GOTO startcls
+	IF '%choice%'=='c' GOTO startcls
+	IF '%choice%'=='C' GOTO startcls
+	
+	IF '%choice%'=='q' GOTO :exit
+	IF '%choice%'=='Q' GOTO :exit
+	IF '%choice%'=='quit' GOTO :exit
+	IF '%choice%'=='QUIT' GOTO :exit
+
+
+
 
 :no
 cls
@@ -245,4 +341,88 @@ echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 pause
+:exit
 exit
+
+:help
+cls
+echo .....................................................................
+echo .....................................................................
+echo ..................................................;WMMM..............
+echo ................................................7aZ@M@MM.............
+echo .............................................r2Xi;..7MWMM............
+echo ..........................................i2Xi:::::..7MWMM...........
+echo .......................................;XSii::,i::::;.XMW@M..........
+echo .....................................rS;::::::::i:i::..aMB@M.........
+echo ..................................XMZ;;ii::i:iii:i;;.,.;MWBMM........
+echo ...............................;MMMMM2;i;ii:i:i:i:i:i:,;MMWBMM.......
+echo ............................;MMMMMMWMX.............;.;.;;0MBBM;......
+echo ..........................Sa7:Z@.,M7.:7;;...;.;.;;;.;.....MWBWM......
+echo .......................raX;i::7;...Z...:ii;;.;.;;;;;.;....2MBWMX.....
+echo ....................;SS;iiiiii;..;.;X.....:,,.;.;;;.;.;.;.rMBB@M.....
+echo ..................Sa;iiiiiiii;..;i;.:i.;.;.;;;;;;;;;.;.;..iMBBBM.....
+echo ...............;aX;i;iiiii;i;:..;:i..;;.;.;.;.;;;;;.;.;...rMB0BM;....
+echo ............;MMZ.,iiiii;;i:ri;.;.;.;.;;;.;.;.;.;.;;:;;....2MBBBMi....
+echo ..........XWMMM@i.;;iiii;..:..;.;.;;;.::..;.;;;;;.;;;;::.;@WBBWM.....
+echo ........Z2..:WMMMa,..::;.....;.;;;.;.;.i;.;;.;.;;;;;...;WM@B0BMM.....
+echo ......Z2;.....;MMMMai.;.....;.;.;.;;;;;.r;..;;;.;;;;;...ZMB0BWM......
+echo .....W;.........SMMMMW2r..;;...;;;.;;;;.;7...;.;.;;;...:BWBBBM7......
+echo ....0;:;..........ZMMMMMM8M:....;.;.;;;..iX...;.;.....;BMBBWMS.......
+echo .....ZSiir..........aMMMMMM@7........;....rr........iaMMBWMMi........
+echo .......ZXi;;..........XMMMMMMMX;...........@i....;XWMM@B@MM..........
+echo ........:87;i...........;SMMMMMMM@ZSr;;XXZ8MM@0BWMMMW@@MMi...........
+echo ..........,ZS;;.............rSWMMMMMMMMMMMMMMMMMMMMMMMM;.............
+echo .............aZX;.................;irSaBWMMMMMWBS72BZ................
+echo ...............;8a;.............................iXr..................
+echo ..................iaaXi.....................i77i.....................
+echo ......................;ii;;iiii:::i:i:;i;;;..........................
+echo .....................................................................
+echo .....................................................................
+echo _____________________________________________________________________    
+echo _____________________________ OHUD HELP _____________________________
+echo ---------------------------------------------------------------------
+echo.
+echo  Commands                        I
+echo                                  I
+echo  Resources: ......... R          I   
+echo  Github: ............ G          I   
+echo  Quit: .............. Q          I   
+echo  Back: .............. B          I
+echo                                  I
+echo _____________________________________________________________________
+echo ---------------------------------------------------------------------
+SET choice=
+SET /p choice=Command:
+
+	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
+	
+	IF '%choice%'=='g' GOTO git
+	IF '%choice%'=='G GOTO git
+	IF '%choice%'=='git GOTO git
+	IF '%choice%'=='Git' GOTO git
+	IF '%choice%'=='GIT' GOTO git
+	IF '%choice%'=='Gi' GOTO git
+	IF '%choice%'=='GI' GOTO git
+	
+	IF '%choice%'=='r' GOTO Resources
+	IF '%choice%'=='R' GOTO Resources
+	IF '%choice%'=='re GOTO Resources
+	IF '%choice%'=='RE' GOTO Resources
+	IF '%choice%'=='res' GOTO Resources
+	IF '%choice%'=='RES' GOTO Resources
+	
+	IF '%choice%'=='' GOTO help
+	
+	IF '%choice%'=='reloadverdata' GOTO RVD
+	IF '%choice%'=='rvd' GOTO RVD
+	IF '%choice%'=='RVD' GOTO RVD	
+	
+	IF '%choice%'=='q' GOTO exit
+	IF '%choice%'=='Q' GOTO exit
+	IF '%choice%'=='quit' GOTO exit
+	IF '%choice%'=='QUIT' GOTO exit
+	
+	IF '%choice%'=='b' GOTO startcls
+	IF '%choice%'=='B' GOTO startcls
+	IF '%choice%'=='back' GOTO startcls
+	IF '%choice%'=='BACK' GOTO startcls

@@ -77,7 +77,7 @@ For %%A in ("%filename%") do (
 	echo  %%~tA
 )
 echo.
-echo newest github version:
+echo  newest github version:
 echo %UpdateVer%
 	
 echo _____________________________________________________________________

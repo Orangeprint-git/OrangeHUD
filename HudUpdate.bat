@@ -77,7 +77,7 @@ echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 
 ::shortened directory echo
-used also 
+
 for /D %%I in ("%~dp0."
 ) do for %%J in (
 	"%%~dpI."

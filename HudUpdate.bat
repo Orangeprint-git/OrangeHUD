@@ -9,6 +9,7 @@ set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.
 set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 
 MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"2>nul >nul
+
 powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 
 :startcls
@@ -50,6 +51,13 @@ echo ________________ UPDATING FILES IN CURRENT DIRECTORY ________________
 echo ---------------------------------------------------------------------
 
 
+for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+set "filename=%ParentFolderName%\OrangeHUD-main"
+For %%A in ("%filename%") do (
+	echo.
+	echo %%~dA\...%%~pA"
+	echo.
+)
 
 findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 if %errorlevel%==0 (
@@ -61,8 +69,13 @@ if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer2=%%h
 )
 
-echo currently installed:
+
 if %UpdateVer2% GEQ %UpdateVer% (echo %UpdateVer2% [32mUP TO DATE[33m) ELSE (echo %UpdateVer2% [31mOUTDATED[33m)
+for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+set "filename=%ParentFolderName%\OrangeHUD-main"
+For %%A in ("%filename%") do (
+	echo  %%~tA
+)
 echo.
 echo newest github version:
 echo %UpdateVer%

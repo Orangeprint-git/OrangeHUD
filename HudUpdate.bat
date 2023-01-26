@@ -63,9 +63,9 @@ if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
 )
 
-findstr "UpdateVer" "UpdateLogOld.txt" 2>nul >nul
+findstr "UpdateVer" "UpdateLogIN.txt" 2>nul >nul
 if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer2=%%h
+for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do set UpdateVer2=%%h
 )
 
 
@@ -105,7 +105,7 @@ goto startcls
 :yes
 @echo off
 SETLOCAL EnableExtensions
-MOVE /y "UpdateLog.txt" "UpdateLog-inst.txt"2>nul >nul
+MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 SET EXE=hl2.exe
 FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
   GOTO notRunning

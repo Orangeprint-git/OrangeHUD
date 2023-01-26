@@ -1,1 +1,1 @@
-UpdateVer: OHUD-0.40-beta
+UpdateVer: OHUD-0.40.002-beta

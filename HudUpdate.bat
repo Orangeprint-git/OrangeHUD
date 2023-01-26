@@ -55,7 +55,7 @@ for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 set "filename=%ParentFolderName%\OrangeHUD-main"
 For %%A in ("%filename%") do (
 	echo.
-	echo %%~dA\...%%~pA"
+	echo  %%~dA\...%%~pA"
 	echo.
 )
 

@@ -69,13 +69,24 @@ echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 :start
 SET choice=
-SET /p choice=Proceed? [Y/N]: 
+SET /p choice=Proceed? [Y/N/GIT]: 
 IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 IF '%choice%'=='Y' GOTO yes
 IF '%choice%'=='y' GOTO yes
 IF '%choice%'=='N' GOTO no
 IF '%choice%'=='n' GOTO no
 IF '%choice%'=='' GOTO no
+IF '%choice%'=='g' GOTO git
+IF '%choice%'=='G GOTO git
+IF '%choice%'=='git GOTO git
+IF '%choice%'=='Git' GOTO git
+IF '%choice%'=='GIT' GOTO git
+IF '%choice%'=='Gi' GOTO git
+IF '%choice%'=='GI' GOTO git
+
+:git
+start "" %gitlink%
+goto startcls
 
 :yes
 @echo off

@@ -8,6 +8,8 @@ set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 
+del "%~dp0\"UpdateLog.txt 2>nul >nul
+:startrllog
 powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 
 :startcls
@@ -68,7 +70,12 @@ for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do
 )
 
 
-if %UpdateVer2% GEQ %UpdateVer% (echo %UpdateVer2% [32mUP TO DATE[33m) ELSE (echo %UpdateVer2% [31mOUTDATED[33m)
+if %UpdateVer2% GEQ %UpdateVer% (
+echo %UpdateVer% [32mUP TO DATE[33m
+) ELSE (
+echo %UpdateVer% [31mOUTDATED[33m
+)
+
 for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 set "filename=%ParentFolderName%\OrangeHUD-main"
 For %%A in ("%filename%") do (
@@ -76,7 +83,7 @@ For %%A in ("%filename%") do (
 )
 echo.
 echo  newest github version:
-echo %UpdateVer%
+echo %UpdateVer2%
 	
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------

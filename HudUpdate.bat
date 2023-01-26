@@ -1,15 +1,41 @@
 @echo off&setlocal
 SETLOCAL EnableDelayedExpansion
+
+
+::Launch defs
 title OHUD Update
 color 06
 mode 69,48
 
-set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
-set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
-set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
+::   _____________________________________________________________________    
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
-del "%~dp0\"UpdateLog.txt 2>nul >nul
-powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
+:: Window size set and fix
+:: adding [ echo %height% 2>nul >nul ] to any state resets the size of-
+:: this window if it has been dragged accidentally.
+:: uses powershell to call for the window size.
+
+FOR /F "delims=" %%G in ('powershell.exe -executionpolicy unrestricted $host.UI.RawUI.WindowSize.Height') do SET height=%%G
+	IF /I "%height%" GEQ "69" mode con: cols=69 lines=48
+	IF /I "%height%" LEQ "69" mode con: cols=69 lines=48
+
+   
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
+::links
+	set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
+	set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
+	set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
+	
+
+::Update version check
+	del "%~dp0\"UpdateLog.txt 2>nul >nul
+	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
+   
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :startcls
 cls
@@ -48,30 +74,38 @@ echo .....................................................................
 echo _____________________________________________________________________    
 echo ________________ UPDATING FILES IN CURRENT DIRECTORY ________________ 
 echo ---------------------------------------------------------------------
+echo %height% 2>nul >nul
 
-
-for %%I in ("%~dp0."
+::shortened directory echo
+used also 
+for /D %%I in ("%~dp0."
 ) do for %%J in (
 	"%%~dpI."
-	
+ 
 ) do set ParentFolderName=%%~dpnxJ
 	set "filename=%ParentFolderName%\OrangeHUD-main"
 	For %%A in ("%filename%"
+
 ) do (
 	echo.
 	echo  %%~dA\...%%~pA"
 	echo.
 )
+   
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
+::finds UpdateVer: line in UpdateLog.txt
 	findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 	if %errorlevel%==0 (
 	for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
 )
-
+::finds UpdateVer: line in UpdateLogIN.txt which is the currently installed version.
 	findstr "UpdateVer" "UpdateLogIN.txt" 2>nul >nul
 	if %errorlevel%==0 (
 	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do set UpdateVer2=%%h
 )
+
 
 if %UpdateVer2% GEQ %UpdateVer% (
 	echo %UpdateVer% [32mUP TO DATE[33m
@@ -79,6 +113,7 @@ if %UpdateVer2% GEQ %UpdateVer% (
 	echo %UpdateVer% [31mOUTDATED[33m
 )
 
+::Date and time of last installed version.
 for %%I in (
 	"%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 	set "filename=%ParentFolderName%\OrangeHUD-main"
@@ -87,6 +122,7 @@ for %%I in (
 	echo  %%~tA
 )
 
+::latest github from UpdateVer: line in UpdateLog.txt
 	echo.
 	echo  newest github version:
 	echo %UpdateVer2%
@@ -118,7 +154,7 @@ SET /p choice=Proceed? [ Y/N/ HELP ]:
 	IF '%choice%'=='res' GOTO Resources
 	IF '%choice%'=='RES' GOTO Resources
 	
-	IF '%choice%'=='' GOTO no
+	IF '%choice%'=='' GOTO startcls
 	
 	IF '%choice%'=='rl' GOTO rvd
 	IF '%choice%'=='RL' GOTO rvd	
@@ -132,15 +168,25 @@ SET /p choice=Proceed? [ Y/N/ HELP ]:
 	IF '%choice%'=='H' GOTO help
 	IF '%choice%'=='help' GOTO help
 	IF '%choice%'=='HELP' GOTO help
+	
+	IF '%choice%'=='s' GOTO WindowSizecommand
+	IF '%choice%'=='S' GOTO WindowSizecommand
+
+
+:WindowSizecommand
+	echo %height% 2>nul >nul
+	GOTO startcls
 
 :rvd
 SETLOCAL EnableDelayedExpansion
-powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
-GOTO startcls
+	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
+	echo %height% 2>nul >nul
+	GOTO startcls
 
 
 :git
 	start "" %gitlink%
+	echo %height%
 	goto startcls
 
 :yes
@@ -152,21 +198,25 @@ FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
 ) ELSE (
   GOTO Running
 )
-...
+
 :Running
 	taskkill /IM hl2.exe /F>NUL
 	powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
+	echo %height% 2>nul >nul
 goto unpack
 
 :notRunning
 	powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
 	goto unpack
+	echo %height% 2>nul >nul
 
 :unpack
 for %%I in (
 	"%~dp0."
 )	do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 	powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
+	echo %height% 2>nul >nul
+	
 cls
 echo .....................................................................
 echo .....................................................................
@@ -214,6 +264,7 @@ echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
+echo %height% 2>nul >nul
 pause
 MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 start "" "steam://rungameid/440"
@@ -269,6 +320,7 @@ echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
+echo %height% 2>nul >nul
 SET choice=
 SET /p choice=Proceed? [ Y/N/ HELP ]: 
 
@@ -340,6 +392,7 @@ echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
+echo %height% 2>nul >nul
 pause
 :exit
 exit
@@ -391,6 +444,7 @@ echo  Back: .............. B          I
 echo                                  I
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
+echo %height% 2>nul >nul
 SET choice=
 SET /p choice=Command:
 

@@ -8,8 +8,6 @@ set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 
-MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
-
 powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 
 :startcls
@@ -173,6 +171,7 @@ echo off
 <nul set /p ".=%DEL%" > "%~2"
 findstr /v /a:%1 /R "^$" "%~2" nul
 del "%~2" > nul 2>&1i
+MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 echo.
 echo.
 echo.

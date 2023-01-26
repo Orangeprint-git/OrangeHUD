@@ -2,7 +2,7 @@
 SETLOCAL EnableDelayedExpansion
 title OHUD Update
 color 06
-mode 70,48
+mode 69,48
 
 set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 

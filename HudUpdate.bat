@@ -155,18 +155,18 @@ FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
 ...
 :Running
 	taskkill /IM hl2.exe /F>NUL
-	//powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
+	powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
 goto unpack
 
 :notRunning
-	//powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
+	powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
 	goto unpack
 
 :unpack
 for %%I in (
 	"%~dp0."
 )	do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-	//powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
+	powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
 cls
 echo .....................................................................
 echo .....................................................................

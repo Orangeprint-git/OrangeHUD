@@ -8,7 +8,7 @@ set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 
-MOVE /y "UpdateLog.txt" "UpdateLogOld.txt"2>nul >nul
+MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 
 powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 
@@ -64,9 +64,9 @@ if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
 )
 
-findstr "UpdateVer" "UpdateLogOld.txt" 2>nul >nul
+findstr "UpdateVer" "UpdateLogIN.txt" 2>nul >nul
 if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogOld.txt"') do set UpdateVer2=%%h
+for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do set UpdateVer2=%%h
 )
 
 

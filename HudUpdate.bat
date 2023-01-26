@@ -51,62 +51,69 @@ echo ________________ UPDATING FILES IN CURRENT DIRECTORY ________________
 echo ---------------------------------------------------------------------
 
 
-for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-set "filename=%ParentFolderName%\OrangeHUD-main"
-For %%A in ("%filename%") do (
+for %%I in ("%~dp0."
+) do for %%J in (
+	"%%~dpI."
+	
+) do set ParentFolderName=%%~dpnxJ
+	set "filename=%ParentFolderName%\OrangeHUD-main"
+	For %%A in ("%filename%"
+) do (
 	echo.
 	echo  %%~dA\...%%~pA"
 	echo.
 )
 
-findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
-if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
+	findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
+	if %errorlevel%==0 (
+	for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
 )
 
-findstr "UpdateVer" "UpdateLogIN.txt" 2>nul >nul
-if %errorlevel%==0 (
-for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do set UpdateVer2=%%h
+	findstr "UpdateVer" "UpdateLogIN.txt" 2>nul >nul
+	if %errorlevel%==0 (
+	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do set UpdateVer2=%%h
 )
-
 
 if %UpdateVer2% GEQ %UpdateVer% (
-echo %UpdateVer% [32mUP TO DATE[33m
+	echo %UpdateVer% [32mUP TO DATE[33m
 ) ELSE (
-echo %UpdateVer% [31mOUTDATED[33m
+	echo %UpdateVer% [31mOUTDATED[33m
 )
 
-for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-set "filename=%ParentFolderName%\OrangeHUD-main"
-For %%A in ("%filename%") do (
+for %%I in (
+	"%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+	set "filename=%ParentFolderName%\OrangeHUD-main"
+	For %%A in ("%filename%"
+) do (
 	echo  %%~tA
 )
-echo.
-echo  newest github version:
-echo %UpdateVer2%
+
+	echo.
+	echo  newest github version:
+	echo %UpdateVer2%
 	
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 :start
 SET choice=
 SET /p choice=Proceed? [Y/N/GIT]: 
-IF NOT '%choice%'=='' SET choice=%choice:~0,1%
-IF '%choice%'=='Y' GOTO yes
-IF '%choice%'=='y' GOTO yes
-IF '%choice%'=='N' GOTO no
-IF '%choice%'=='n' GOTO no
-IF '%choice%'=='' GOTO no
-IF '%choice%'=='g' GOTO git
-IF '%choice%'=='G GOTO git
-IF '%choice%'=='git GOTO git
-IF '%choice%'=='Git' GOTO git
-IF '%choice%'=='GIT' GOTO git
-IF '%choice%'=='Gi' GOTO git
-IF '%choice%'=='GI' GOTO git
+	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
+	IF '%choice%'=='Y' GOTO yes
+	IF '%choice%'=='y' GOTO yes
+	IF '%choice%'=='N' GOTO no
+	IF '%choice%'=='n' GOTO no
+	IF '%choice%'=='' GOTO no
+	IF '%choice%'=='g' GOTO git
+	IF '%choice%'=='G GOTO git
+	IF '%choice%'=='git GOTO git
+	IF '%choice%'=='Git' GOTO git
+	IF '%choice%'=='GIT' GOTO git
+	IF '%choice%'=='Gi' GOTO git
+	IF '%choice%'=='GI' GOTO git
 
 :git
-start "" %gitlink%
-goto startcls
+	start "" %gitlink%
+	goto startcls
 
 :yes
 @echo off
@@ -119,17 +126,19 @@ FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
 )
 ...
 :Running
-taskkill /IM hl2.exe /F>NUL
-powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
+	taskkill /IM hl2.exe /F>NUL
+	//powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
 goto unpack
 
 :notRunning
-powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
-goto unpack
+	//powershell -Command "Invoke-WebRequest https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip -Outfile OHUD.zip"
+	goto unpack
 
 :unpack
-for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
+for %%I in (
+	"%~dp0."
+)	do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+	//powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
 cls
 echo .....................................................................
 echo .....................................................................
@@ -168,16 +177,9 @@ echo _____________________ OHUD UPDATE SUCCESSFUL ________________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
-  set "DEL=%%a"
-)
-call :colorEcho 0a "                         Proccess Finished."
 
-:colorEcho
-echo off
-<nul set /p ".=%DEL%" > "%~2"
-findstr /v /a:%1 /R "^$" "%~2" nul
-del "%~2" > nul 2>&1i
+echo                         [32mProccess Finished.[33m
+
 echo.
 echo.
 echo.
@@ -233,15 +235,9 @@ echo ---------------------------------------------------------------------
 echo.
 echo.
 
-for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
-  set "DEL=%%a"
-)
-call :colorEcho 04 "                         Proccess Cancelled."
+echo                         [31mProccess Cancelled.[33m
 
-:colorEcho
-<nul set /p ".=%DEL%" > "%~2"
-findstr /v /a:%1 /R "^$" "%~2" nul
-del "%~2" > nul 2>&1i
+
 echo.
 echo.
 echo.

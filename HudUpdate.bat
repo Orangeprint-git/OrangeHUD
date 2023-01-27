@@ -113,17 +113,17 @@ echo %height% 2>nul >nul
 
 ::shortened directory echo
 
-for /D %%I in ("%~dp0."
+for /D %%I in ("%~dp0.
 ) do for %%J in (
 	"%%~dpI."
  
 ) do set ParentFolderName=%%~dpnxJ
-	set "filename=%ParentFolderName%\OrangeHUD-main"
+	set "filename=%ParentFolderName%\OrangeHUD-main
 	For %%A in ("%filename%"
 
 ) do (
 	echo.
-	echo  %%~dA\...%%~pA"
+	echo  %%~dA\...%%~pA
 	echo.
 )
    
@@ -588,17 +588,17 @@ echo %height% 2>nul >nul
 
 ::shortened directory echo
 
-for /D %%I in ("%~dp0."
+for /D %%I in ("%~dp0.
 ) do for %%J in (
-	"%%~dpI."
+	"%%~dpI.
  
 ) do set ParentFolderName=%%~dpnxJ
-	set "filename=%ParentFolderName%\OrangeHUD-main"
+	set "filename=%ParentFolderName%\OrangeHUD-main
 	For %%A in ("%filename%"
 
 ) do (
 	echo.
-	echo  %%~dA\...%%~pA"
+	echo  %%~dA\...%%~pA
 	echo.
 )
 
@@ -676,15 +676,7 @@ echo ____________________ SEARCHING FOR TF2 INSTALL ______________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
-  set "DEL=%%a"
-)
-call :colorEcho 0E "                  Please wait, this may take a while"
-
-:colorEcho
-<nul set /p ".=%DEL%" > "%~2"
-findstr /v /a:%1 /R "^$" "%~2" nul
-del "%~2" > nul 2>&1i
+echo                  [93mPlease wait, this may take a while.[33m
 echo.
 echo.
 echo.

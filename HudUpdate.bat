@@ -28,8 +28,8 @@ color 06
 :: uses powershell to call for the window size.
 
 FOR /F "delims=" %%G in ('powershell.exe -executionpolicy unrestricted $host.UI.RawUI.WindowSize.Height') do SET height=%%G
-	IF /I "%height%" GEQ "69" mode con: cols=69 lines=48
-	IF /I "%height%" LEQ "69" mode con: cols=69 lines=48
+	IF /I "%height%" GEQ "69" mode con: cols=69 lines=49
+	IF /I "%height%" LEQ "69" mode con: cols=69 lines=49
 echo %height% 2>nul >nul
 
    
@@ -131,7 +131,7 @@ echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-
+echo.
 echo                           [31mConnection error.[33m
 
 
@@ -258,7 +258,7 @@ for %%I in (
 	echo.
 	echo  newest github version:
 	echo %UpdateVer%
-	
+echo.	
 echo _____________________________________________________________________
 echo [93m[ Y/N/ HELP / GIT ][33m--------------------------------------------------
 SET choice=
@@ -345,7 +345,7 @@ echo _________________ OHUD UNINSTALLATION SUCCESSFUL ____________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-
+echo.
 echo                         [32mProccess Finished.[33m
 
 echo.
@@ -446,7 +446,7 @@ echo _____________________ OHUD UPDATE SUCCESSFUL ________________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-
+echo.
 echo                         [32mProccess Finished.[33m
 
 echo.
@@ -508,7 +508,7 @@ echo _____________________ OHUD UPDATE SUCCESSFUL ________________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-
+echo.
 echo             [31mpsd files and other materials created for for hud.[33m
 echo                 [31mTHESE FILES HAVE NOT BEEN SET UP YET[33m
 echo.
@@ -580,6 +580,7 @@ echo .....................................................................
 echo _____________________________________________________________________    
 echo ______________________ OHUD UPDATE CANCELLED ________________________
 echo ---------------------------------------------------------------------
+echo.
 echo.
 echo.
 echo.
@@ -657,6 +658,7 @@ echo  Resources: ............. R       I  Reload ver file........ RL
 echo  Github: ................ G       I  install debug ......... INSTALL
 echo  Quit: .................. Q       I  Scan where tf2 + ins .. DIRQ
 echo  Back: .................. B       I  ....................... 
+echo                                   I
 echo                                   I
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
@@ -779,7 +781,7 @@ for /D %%I in ("%~dp0."
 	echo.
 	
 
-   
+echo.
 echo _____________________________________________________________________
 echo [93m[ Y/N/ DIRQ / GIT ][33m--------------------------------------------------
 SET choice=
@@ -854,9 +856,8 @@ echo.
 echo.
 echo.
 echo.
-
 echo                  [93mPlease wait, this may take a while.[33m
-
+echo.
 echo.
 echo.
 echo.
@@ -921,7 +922,7 @@ For %%A in ("%filename%") do (
 	echo "%%~dA\...%%~pAtf\custom"
 	echo.
 )
-
+echo.
 echo.
 echo.
 echo _____________________________________________________________________
@@ -983,6 +984,7 @@ for /f "tokens=1,* delims=:" %%a in ('findstr "UpdateVer" "UpdateLog.txt"') do s
 for /f "tokens=* delims= " %%c in ("!UpdateVer!") do set UpdateVer=%%c
 echo Version: [32m!UpdateVer![33m
 )
+echo.
 echo.
 echo.
 echo _____________________________________________________________________
@@ -1085,6 +1087,7 @@ echo .....................................................................
 echo _____________________________________________________________________    
 echo _____________________ OHUD INSTALL CANCELLED ________________________
 echo ---------------------------------------------------------------------
+echo.
 echo.
 echo.
 echo.

@@ -41,10 +41,16 @@ FOR /F "delims=" %%G in ('powershell.exe -executionpolicy unrestricted $host.UI.
 	set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 	set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 	
-
+:conerr
 ::Update version check
 	del "%~dp0\"UpdateLog.txt 2>nul >nul
-	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
+	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
+	if %errorlevel%==0 (
+	echo.2>nul
+) ELSE (
+	GOTO noconnection 
+	pause 
+)
    
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
@@ -71,6 +77,72 @@ IF EXIST %ParentFolderName%\OrangeHUD (
 
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
+
+:noconnection
+cls
+echo .....................................................................
+echo .....................................................................
+echo ..................................................;WMMM..............
+echo ................................................7aZ@M@MM.............
+echo .............................................r2Xi;..7MWMM............
+echo ..........................................i2Xi:::::..7MWMM...........
+echo .......................................;XSii::,i::::;.XMW@M..........
+echo .....................................rS;::::::::i:i::..aMB@M.........
+echo ..................................XMZ;;ii::i:iii:i;;.,.;MWBMM........
+echo ...............................;MMMMM2;i;ii:i:i:i:i:i:,;MMWBMM.......
+echo ............................;MMMMMMWMX.............;.;.;;0MBBM;......
+echo ..........................Sa7:Z@.,M7.:7;;...;.;.;;;.;.....MWBWM......
+echo .......................raX;i::7;...Z...:ii;;.;.;;;;;.;....2MBWMX.....
+echo ....................;SS;iiiiii;..;.;X.....:,,.;.;;;.;.;.;.rMBB@M.....
+echo ..................Sa;iiiiiiii;..;i;.:i.;.;.;;;;;;;;;.;.;..iMBBBM.....
+echo ...............;aX;i;iiiii;i;:..;:i..;;.;.;.;.;;;;;.;.;...rMB0BM;....
+echo ............;MMZ.,iiiii;;i:ri;.;.;.;.;;;.;.;.;.;.;;:;;....2MBBBMi....
+echo ..........XWMMM@i.;;iiii;..:..;.;.;;;.::..;.;;;;;.;;;;::.;@WBBWM.....
+echo ........Z2..:WMMMa,..::;.....;.;;;.;.;.i;.;;.;.;;;;;...;WM@B0BMM.....
+echo ......Z2;.....;MMMMai.;.....;.;.;.;;;;;.r;..;;;.;;;;;...ZMB0BWM......
+echo .....W;.........SMMMMW2r..;;...;;;.;;;;.;7...;.;.;;;...:BWBBBM7......
+echo ....0;:;..........ZMMMMMM8M:....;.;.;;;..iX...;.;.....;BMBBWMS.......
+echo .....ZSiir..........aMMMMMM@7........;....rr........iaMMBWMMi........
+echo .......ZXi;;..........XMMMMMMMX;...........@i....;XWMM@B@MM..........
+echo ........:87;i...........;SMMMMMMM@ZSr;;XXZ8MM@0BWMMMW@@MMi...........
+echo ..........,ZS;;.............rSWMMMMMMMMMMMMMMMMMMMMMMMM;.............
+echo .............aZX;.................;irSaBWMMMMMWBS72BZ................
+echo ...............;8a;.............................iXr..................
+echo ..................iaaXi.....................i77i.....................
+echo ......................;ii;;iiii:::i:i:;i;;;..........................
+echo .....................................................................
+echo .....................................................................
+echo _____________________________________________________________________    
+echo _____________________________________________________________________ 
+echo ---------------------------------------------------------------------
+echo.
+echo.
+
+echo                           [31mConnection error.[33m
+
+
+echo.
+echo.
+echo.
+echo.
+echo _____________________________________________________________________ 
+echo ---------------------------------------------------------------------
+echo %height% 2>nul >nul
+SET choice=
+SET /p choice=Reconnect? :
+
+	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
+	
+	IF '%choice%'=='' GOTO conerr 
+	IF '%choice%'=='y' GOTO conerr
+	IF '%choice%'=='Y GOTO conerr
+	IF '%choice%'=='n' GOTO exit
+	IF '%choice%'=='N' GOTO exit 
+	
+
+
+
+
 
 :startcls
 cls
@@ -115,7 +187,7 @@ echo %height% 2>nul >nul
 
 for /D %%I in ("%~dp0.
 ) do for %%J in (
-	"%%~dpI."
+	"%%~dpI.
  
 ) do set ParentFolderName=%%~dpnxJ
 	set "filename=%ParentFolderName%\OrangeHUD-main
@@ -588,17 +660,17 @@ echo %height% 2>nul >nul
 
 ::shortened directory echo
 
-for /D %%I in ("%~dp0.
+for /D %%I in ("%~dp0."
 ) do for %%J in (
-	"%%~dpI.
+	"%%~dpI."
  
 ) do set ParentFolderName=%%~dpnxJ
-	set "filename=%ParentFolderName%\OrangeHUD-main
+	set "filename=%ParentFolderName%\OrangeHUD-main"
 	For %%A in ("%filename%"
 
 ) do (
 	echo.
-	echo  %%~dA\...%%~pA
+	echo  %%~dA\...%%~pA"
 	echo.
 )
 
@@ -676,7 +748,15 @@ echo ____________________ SEARCHING FOR TF2 INSTALL ______________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-echo                  [93mPlease wait, this may take a while.[33m
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
+  set "DEL=%%a"
+)
+call :colorEcho 0E "                  Please wait, this may take a while"
+
+:colorEcho
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1i
 echo.
 echo.
 echo.

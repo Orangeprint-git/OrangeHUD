@@ -1,6 +1,18 @@
 @echo off&setlocal
 SETLOCAL EnableDelayedExpansion
-
+::   _____________________________________________________________________    
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+::
+::				DESCRIPTION
+::
+::
+::
+::
+::
+::
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 ::Launch defs
 title OHUD Update
@@ -198,7 +210,8 @@ SET /p choice=Proceed? [ Y/N/ HELP ]:
 	IF '%choice%'=='install' GOTO startinstalstate
 	IF '%choice%'=='INSTALL' GOTO startinstalstate
 	
-	IF '%choice%'=='dirq' GOTO finddir
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 
 :WindowSizecommand
@@ -244,6 +257,10 @@ for %%I in (
 )	do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 	powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
 	echo %height% 2>nul >nul
+	
+	
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 	
 cls
 echo .....................................................................
@@ -299,7 +316,8 @@ start "" "steam://rungameid/440"
 del "%~dp0\OHUD.zip" /s /f /q
 exit
 
-
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :Resources
 cls
@@ -370,7 +388,8 @@ SET /p choice=Proceed? [ Y/N/ HELP ]:
 	IF '%choice%'=='QUIT' GOTO :exit
 
 
-
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :no
 cls
@@ -425,6 +444,9 @@ echo %height% 2>nul >nul
 pause
 :exit
 exit
+
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :help
 cls
@@ -515,18 +537,15 @@ SET /p choice=Command:
 ::   ---------------------------------------------------------------------
 
 
+:: If isntall state is not found it loads everything below this instead
+
+:: contains call dir command DIRQ that looks for tf2 installation 
+:: alternatively you can download and unpack the files anywhere with
 
 
 
-
-
-
-
-
-
-
-
-
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :startinstalstate
 cls
@@ -591,6 +610,7 @@ for /D %%I in ("%~dp0."
 
 ::latest github from UpdateVer: line in UpdateLog.txt
 	echo  Install to current dir?
+	echo  or DIRQ to look for tf2 installation.
 	echo.
 	echo  newest github version:
 	echo %UpdateVer2%
@@ -603,8 +623,8 @@ SET choice=
 SET /p choice=Proceed? [ Y/N/ DIRQ ]: 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
-	IF '%choice%'=='Y' GOTO insyes
-	IF '%choice%'=='y' GOTO insyes
+	IF '%choice%'=='Y' GOTO yesINSTALL
+	IF '%choice%'=='y' GOTO yesINSTALL
 	IF '%choice%'=='N' GOTO noINSTALL
 	IF '%choice%'=='n' GOTO noINSTALL
 	
@@ -652,7 +672,7 @@ echo ......................;ii;;iiii:::i:i:;i;;;..........................
 echo .....................................................................
 echo .....................................................................
 echo _____________________________________________________________________    
-echo _________________________ CHECKING FILE PATH ________________________
+echo ____________________ SEARCHING FOR TF2 INSTALL ______________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
@@ -671,13 +691,13 @@ echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
+
 for /f tokens^=1*delims^=: %%i in ('
 fsutil fsinfo drives')do set "_drvs=%%~j"
 
 for /f tokens^=*^delims^=? %%i in ('
 call dir/b/a-d/s %_drvs:\=\hl2.exe% 2^>nul 
 ')do set "_fpath=%%~dpi" && set "_file=%%~fi" && goto :dirqinstall
-pause
 
 
 :dirqinstall

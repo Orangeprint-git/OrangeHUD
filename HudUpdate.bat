@@ -675,9 +675,9 @@ for /D %%I in ("%~dp0."
 )
 
 ::finds UpdateVer: line in UpdateLogIN.txt which is the currently installed version.
-	findstr "UpdateVer" "UpdateLogIN.txt" 2>nul >nul
+	findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 	if %errorlevel%==0 (
-	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do set UpdateVer2=%%h
+	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%h
 )
 
 ::latest github from UpdateVer: line in UpdateLog.txt
@@ -685,8 +685,9 @@ for /D %%I in ("%~dp0."
 	echo  or DIRQ to look for tf2 installation.
 	echo.
 	echo  newest github version:
-	echo %UpdateVer2%
+	echo %UpdateVer%
 	echo.
+
    
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
@@ -888,6 +889,7 @@ echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 pause
 del "%~dp0\UpdateLog.txt" /s /f /q
+MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 exit
 
 

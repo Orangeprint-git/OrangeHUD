@@ -1,1 +1,1 @@
-UpdateVer: OHUD-0.40.005-beta
+UpdateVer: This should be over written next time you update.

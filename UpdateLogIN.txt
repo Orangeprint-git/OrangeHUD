@@ -1,1 +1,1 @@
-UpdateVer: This should be over written next time you update.
+UpdateVer: This should be over written after updating is finished.

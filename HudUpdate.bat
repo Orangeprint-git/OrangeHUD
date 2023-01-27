@@ -66,10 +66,14 @@ for /D %%I in ("%~dp0."
 )
 
 IF EXIST %ParentFolderName%\OrangeHUD (
-  GOTO startcls
+	set startfunc= startcls
+	GOTO startcls
 ) ELSE (
-  GOTO startinstalstate
+	set startfunc= startinstalstate
+	GOTO startinstalstate
 )
+
+
 
 
 
@@ -235,7 +239,7 @@ for %%I in (
 	echo %UpdateVer2%
 	
 echo _____________________________________________________________________
-echo -[ Y/N/ HELP ]-------------------------------------------------------
+echo -------------------------------------------------------[93m[ Y/N/ HELP ][33m-
 SET choice=
 SET /p choice=Proceed?: 
 
@@ -430,13 +434,13 @@ echo ---------------------------------------------------------------------
 echo.
 echo.
 
-echo             psd files and other materials created for for hud.
-echo                 THESE FILES HAVE NOT BEEN SET UP YET
+echo             [31mpsd files and other materials created for for hud.[33m
+echo                 [31mTHESE FILES HAVE NOT BEEN SET UP YET[33m
 echo.
 echo.
 echo.
 echo _____________________________________________________________________
-echo -[ Y/N/ HELP ]-------------------------------------------------------
+echo -------------------------------------------------------[93m[ Y/N/ HELP ][33m-
 echo %height% 2>nul >nul
 
 
@@ -450,8 +454,8 @@ SET /p choice=Proceed?:
 	IF '%choice%'=='n' GOTO startcls
 	IF '%choice%'=='b' GOTO startcls
 	IF '%choice%'=='B' GOTO startcls
-	IF '%choice%'=='back' GOTO startcls
-	IF '%choice%'=='BACK' GOTO startcls
+	IF '%choice%'=='back' GOTO %startfunc%
+	IF '%choice%'=='BACK' GOTO %startfunc%
 	IF '%choice%'=='c' GOTO startcls
 	IF '%choice%'=='C' GOTO startcls
 	
@@ -521,6 +525,18 @@ exit
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
+
+
+:: If isntall state is not found it loads everything below this instead
+
+:: contains call dir command DIRQ that looks for tf2 installation 
+:: alternatively you can download and unpack the files anywhere with
+
+
+
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
 :help
 cls
 echo .....................................................................
@@ -558,14 +574,14 @@ echo .....................................................................
 echo _____________________________________________________________________    
 echo _____________________________ OHUD HELP _____________________________
 echo ---------------------------------------------------------------------
-echo.
-echo  Commands                        I
-echo                                  I
-echo  Resources: ......... R          I   
-echo  Github: ............ G          I   
-echo  Quit: .............. Q          I   
-echo  Back: .............. B          I
-echo                                  I
+echo  %startfunc%
+echo  Commands                         I
+echo                                   I
+echo  Resources: ............. R       I  Reload ver file........ RL
+echo  Github: ................ G       I  install debug ......... INSTALL
+echo  Quit: .................. Q       I  Scan where tf2 + ins .. DIRQ
+echo  Back: .................. B       I  ....................... 
+echo                                   I
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
@@ -600,21 +616,21 @@ SET /p choice=Command:
 	IF '%choice%'=='quit' GOTO exit
 	IF '%choice%'=='QUIT' GOTO exit
 	
-	IF '%choice%'=='b' GOTO startcls
-	IF '%choice%'=='B' GOTO startcls
-	IF '%choice%'=='back' GOTO startcls
-	IF '%choice%'=='BACK' GOTO startcls
-
-
-::   _____________________________________________________________________ 
-::   ---------------------------------------------------------------------
-
-
-:: If isntall state is not found it loads everything below this instead
-
-:: contains call dir command DIRQ that looks for tf2 installation 
-:: alternatively you can download and unpack the files anywhere with
-
+	IF '%choice%'=='b' GOTO %startfunc%
+	IF '%choice%'=='B' GOTO %startfunc%
+	IF '%choice%'=='back' GOTO %startfunc%
+	IF '%choice%'=='BACK' GOTO %startfunc%
+	
+	IF '%choice%'=='s' GOTO WindowSizecommand
+	IF '%choice%'=='S' GOTO WindowSizecommand
+	
+	IF '%choice%'=='install' GOTO startinstalstate
+	IF '%choice%'=='INSTALL' GOTO startinstalstate
+	
+	IF '%choice%'=='dirq' GOTO dirquery
+	IF '%choice%'=='DIRQ' GOTO dirquery
+	IF '%choice%'=='dir' GOTO dirquery
+	IF '%choice%'=='DIR' GOTO dirquery
 
 
 ::   _____________________________________________________________________ 
@@ -623,6 +639,7 @@ SET /p choice=Command:
 :gitl
 	start "" %gitlink%
 	GOTO startinstalstate
+	
 
 :startinstalstate
 cls
@@ -692,10 +709,11 @@ for /D %%I in ("%~dp0."
 	echo  newest github version:
 	echo %UpdateVer%
 	echo.
+	
 
    
 echo _____________________________________________________________________
-echo -[ Y/N/ DIRQ / GIT ]-------------------------------------------------
+echo -------------------------------------------------[93m[ Y/N/ DIRQ / GIT ][33m-
 SET choice=
 SET /p choice=Command: 
 
@@ -714,9 +732,18 @@ SET /p choice=Command:
 	IF '%choice%'=='G' GOTO gitl
 	IF '%choice%'=='git' GOTO gitl
 	IF '%choice%'=='GIT' GOTO gitl
+	
+	IF '%choice%'=='h' GOTO help
+	IF '%choice%'=='H' GOTO help
+	IF '%choice%'=='help' GOTO help
+	IF '%choice%'=='HELP' GOTO help
+	
+	
 
 ::   _____________________________________________________________________ 
-::   ---------------------------------------------------------------------	
+::   ---------------------------------------------------------------------
+
+	
 
 :dirquery
 cls
@@ -757,8 +784,10 @@ echo ____________________ SEARCHING FOR TF2 INSTALL ______________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
+echo.
+echo.
 
-echo             [93mPlease wait, this may take a while.[33m
+echo                  [93mPlease wait, this may take a while.[33m
 
 echo.
 echo.
@@ -988,7 +1017,8 @@ echo _____________________ OHUD INSTALL CANCELLED ________________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-
+echo.
+echo.
 echo                         [31mProccess Cancelled.[33m
 
 

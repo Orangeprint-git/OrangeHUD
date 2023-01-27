@@ -17,7 +17,6 @@ SETLOCAL EnableDelayedExpansion
 ::Launch defs
 title OHUD Update
 color 06
-mode 69,48
 
 ::   _____________________________________________________________________    
 ::   _____________________________________________________________________ 
@@ -31,6 +30,7 @@ mode 69,48
 FOR /F "delims=" %%G in ('powershell.exe -executionpolicy unrestricted $host.UI.RawUI.WindowSize.Height') do SET height=%%G
 	IF /I "%height%" GEQ "69" mode con: cols=69 lines=48
 	IF /I "%height%" LEQ "69" mode con: cols=69 lines=48
+echo %height% 2>nul >nul
 
    
 ::   _____________________________________________________________________ 
@@ -54,6 +54,16 @@ FOR /F "delims=" %%G in ('powershell.exe -executionpolicy unrestricted $host.UI.
    
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
+
+::Version error
+IF EXIST "UpdateLogIN.txt" (
+	set ULIN=UpdateLogIN.txt
+) ELSE (
+echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.[33m" > OHUDtemp.txt
+	set ULIN=OHUDtemp.txt
+)
+
+
 
 :: if hud install not found make window into install state
 
@@ -143,6 +153,11 @@ SET /p choice=Reconnect? :
 	IF '%choice%'=='n' GOTO exit
 	IF '%choice%'=='N' GOTO exit 
 	
+	
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+	
+	
 
 
 
@@ -210,16 +225,22 @@ for /D %%I in ("%~dp0.
 	findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 	if %errorlevel%==0 (
 	for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
-)
+) ELSE (
+	do set UpdateVer=[31mERR[33m
+) 
+
+
 ::finds UpdateVer: line in UpdateLogIN.txt which is the currently installed version.
-	findstr "UpdateVer" "UpdateLogIN.txt" 2>nul >nul
+	findstr "UpdateVer" "%ULIN%" 2>nul >nul
 	if %errorlevel%==0 (
-	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLogIN.txt"') do set UpdateVer2=%%h
-)
+	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "%ULIN%"') do set UpdateVer2=%%h
+) ELSE (
+	echo ERR
+) 
 
 
 if %UpdateVer2% GEQ %UpdateVer% (
-	echo %UpdateVer2% [32mUP TO DATE[33m
+	echo %UpdateVer2% [32mUP TO DATE[33m 
 ) ELSE (
 	echo %UpdateVer2% [31mOUTDATED[33m
 )
@@ -239,7 +260,7 @@ for %%I in (
 	echo %UpdateVer%
 	
 echo _____________________________________________________________________
-echo [93m[ Y/N/ HELP ][33m--------------------------------------------------------
+echo [93m[ Y/N/ HELP / GIT ][33m--------------------------------------------------
 SET choice=
 SET /p choice=Proceed?: 
 
@@ -276,9 +297,74 @@ SET /p choice=Proceed?:
 	IF '%choice%'=='S' GOTO WindowSizecommand
 	IF '%choice%'=='install' GOTO startinstalstate
 	IF '%choice%'=='INSTALL' GOTO startinstalstate
+	IF '%choice%'=='uninstall' GOTO Uninst
+	IF '%choice%'=='UNINSTALL' GOTO :Uninst
 	
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
+
+:Uninst
+taskkill /IM hl2.exe /F
+for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+rmdir /S /Q "%ParentFolderName%\OrangeHUD-main" 9<"%~f0" 2>nul 
+cls
+echo .....................................................................
+echo .....................................................................
+echo ..................................................;WMMM..............
+echo ................................................7aZ@M@MM.............
+echo .............................................r2Xi;..7MWMM............
+echo ..........................................i2Xi:::::..7MWMM...........
+echo .......................................;XSii::,i::::;.XMW@M..........
+echo .....................................rS;::::::::i:i::..aMB@M.........
+echo ..................................XMZ;;ii::i:iii:i;;.,.;MWBMM........
+echo ...............................;MMMMM2;i;ii:i:i:i:i:i:,;MMWBMM.......
+echo ............................;MMMMMMWMX.............;.;.;;0MBBM;......
+echo ..........................Sa7:Z@.,M7.:7;;...;.;.;;;.;.....MWBWM......
+echo .......................raX;i::7;...Z...:ii;;.;.;;;;;.;....2MBWMX.....
+echo ....................;SS;iiiiii;..;.;X.....:,,.;.;;;.;.;.;.rMBB@M.....
+echo ..................Sa;iiiiiiii;..;i;.:i.;.;.;;;;;;;;;.;.;..iMBBBM.....
+echo ...............;aX;i;iiiii;i;:..;:i..;;.;.;.;.;;;;;.;.;...rMB0BM;....
+echo ............;MMZ.,iiiii;;i:ri;.;.;.;.;;;.;.;.;.;.;;:;;....2MBBBMi....
+echo ..........XWMMM@i.;;iiii;..:..;.;.;;;.::..;.;;;;;.;;;;::.;@WBBWM.....
+echo ........Z2..:WMMMa,..::;.....;.;;;.;.;.i;.;;.;.;;;;;...;WM@B0BMM.....
+echo ......Z2;.....;MMMMai.;.....;.;.;.;;;;;.r;..;;;.;;;;;...ZMB0BWM......
+echo .....W;.........SMMMMW2r..;;...;;;.;;;;.;7...;.;.;;;...:BWBBBM7......
+echo ....0;:;..........ZMMMMMM8M:....;.;.;;;..iX...;.;.....;BMBBWMS.......
+echo .....ZSiir..........aMMMMMM@7........;....rr........iaMMBWMMi........
+echo .......ZXi;;..........XMMMMMMMX;...........@i....;XWMM@B@MM..........
+echo ........:87;i...........;SMMMMMMM@ZSr;;XXZ8MM@0BWMMMW@@MMi...........
+echo ..........,ZS;;.............rSWMMMMMMMMMMMMMMMMMMMMMMMM;.............
+echo .............aZX;.................;irSaBWMMMMMWBS72BZ................
+echo ...............;8a;.............................iXr..................
+echo ..................iaaXi.....................i77i.....................
+echo ......................;ii;;iiii:::i:i:;i;;;..........................
+echo .....................................................................
+echo .....................................................................
+echo _____________________________________________________________________    
+echo _________________ OHUD UNINSTALLATION SUCCESSFUL ____________________
+echo ---------------------------------------------------------------------
+echo.
+echo.
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
+  set "DEL=%%a"
+)
+call :colorEcho 0a "                         Proccess Finished."
+
+:colorEcho
+echo off
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1i  
+echo.
+echo.
+echo.
+echo.
+echo _____________________________________________________________________
+echo ---------------------------------------------------------------------
+pause
+start "" "steam://rungameid/440"
+del "%ParentFolderName%\OrangeHUD-main\HudUninstall.bat" /S /Q
+exit
 
 
 :WindowSizecommand
@@ -324,11 +410,71 @@ for %%I in (
 )	do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 	powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
 	echo %height% 2>nul >nul
-	
+	GOTO updatefinished
 	
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 	
+:Uninst
+taskkill /IM hl2.exe /F
+for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+rmdir /S /Q "%ParentFolderName%\OrangeHUD-main" 9<"%~f0" 2>nul 
+cls
+echo .....................................................................
+echo .....................................................................
+echo ..................................................;WMMM..............
+echo ................................................7aZ@M@MM.............
+echo .............................................r2Xi;..7MWMM............
+echo ..........................................i2Xi:::::..7MWMM...........
+echo .......................................;XSii::,i::::;.XMW@M..........
+echo .....................................rS;::::::::i:i::..aMB@M.........
+echo ..................................XMZ;;ii::i:iii:i;;.,.;MWBMM........
+echo ...............................;MMMMM2;i;ii:i:i:i:i:i:,;MMWBMM.......
+echo ............................;MMMMMMWMX.............;.;.;;0MBBM;......
+echo ..........................Sa7:Z@.,M7.:7;;...;.;.;;;.;.....MWBWM......
+echo .......................raX;i::7;...Z...:ii;;.;.;;;;;.;....2MBWMX.....
+echo ....................;SS;iiiiii;..;.;X.....:,,.;.;;;.;.;.;.rMBB@M.....
+echo ..................Sa;iiiiiiii;..;i;.:i.;.;.;;;;;;;;;.;.;..iMBBBM.....
+echo ...............;aX;i;iiiii;i;:..;:i..;;.;.;.;.;;;;;.;.;...rMB0BM;....
+echo ............;MMZ.,iiiii;;i:ri;.;.;.;.;;;.;.;.;.;.;;:;;....2MBBBMi....
+echo ..........XWMMM@i.;;iiii;..:..;.;.;;;.::..;.;;;;;.;;;;::.;@WBBWM.....
+echo ........Z2..:WMMMa,..::;.....;.;;;.;.;.i;.;;.;.;;;;;...;WM@B0BMM.....
+echo ......Z2;.....;MMMMai.;.....;.;.;.;;;;;.r;..;;;.;;;;;...ZMB0BWM......
+echo .....W;.........SMMMMW2r..;;...;;;.;;;;.;7...;.;.;;;...:BWBBBM7......
+echo ....0;:;..........ZMMMMMM8M:....;.;.;;;..iX...;.;.....;BMBBWMS.......
+echo .....ZSiir..........aMMMMMM@7........;....rr........iaMMBWMMi........
+echo .......ZXi;;..........XMMMMMMMX;...........@i....;XWMM@B@MM..........
+echo ........:87;i...........;SMMMMMMM@ZSr;;XXZ8MM@0BWMMMW@@MMi...........
+echo ..........,ZS;;.............rSWMMMMMMMMMMMMMMMMMMMMMMMM;.............
+echo .............aZX;.................;irSaBWMMMMMWBS72BZ................
+echo ...............;8a;.............................iXr..................
+echo ..................iaaXi.....................i77i.....................
+echo ......................;ii;;iiii:::i:i:;i;;;..........................
+echo .....................................................................
+echo .....................................................................
+echo _____________________________________________________________________    
+echo _________________ OHUD UNINSTALLATION SUCCESSFUL ____________________
+echo ---------------------------------------------------------------------
+echo.
+echo.
+
+echo                         [32mProccess Finished.[33m
+
+echo.
+echo.
+echo.
+echo.
+echo _____________________________________________________________________
+echo ---------------------------------------------------------------------
+pause
+start "" "steam://rungameid/440"
+exit
+	
+	
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
+:updatefinished
 cls
 echo .....................................................................
 echo .....................................................................
@@ -377,10 +523,13 @@ echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
-pause
-MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
-start "" "steam://rungameid/440"
 del "%~dp0\OHUD.zip" /s /f /q
+del "%~dp0\OHUDtemp.txt" /s /f /q
+MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
+ECHO Start the game, press any key to continue, or click X to close.
+pause >nul
+start "" "steam://rungameid/440"
+
 exit
 
 ::   _____________________________________________________________________ 
@@ -499,10 +648,8 @@ echo ______________________ OHUD UPDATE CANCELLED ________________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-
+echo.
 echo                         [31mProccess Cancelled.[33m
-
-
 echo.
 echo.
 echo.
@@ -510,7 +657,8 @@ echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
-pause
+Echo Exit: press any key.
+pause >nul
 :exit
 exit
 
@@ -578,7 +726,7 @@ echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 SET choice=
-SET /p choice=Command:
+SET /p choice=Command: 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	
@@ -903,7 +1051,9 @@ echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
-pause
+del "OHUDtemp.txt" /s /f /q
+Echo Exit: press any key.
+pause >nul
 del "%~dp0\UpdateLog.txt" /s /f /q
 MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 exit
@@ -1002,10 +1152,7 @@ echo ---------------------------------------------------------------------
 echo.
 echo.
 echo.
-echo.
 echo                         [31mProccess Cancelled.[33m
-
-
 echo.
 echo.
 echo.
@@ -1013,5 +1160,7 @@ echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
-pause
-EXIT
+Echo Exit: press any key.
+pause >nul
+:exit
+exit

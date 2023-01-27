@@ -303,55 +303,6 @@ SET /p choice=Proceed?:
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
-
-:WindowSizecommand
-	echo %height% 2>nul >nul
-	GOTO startcls
-
-:rvd
-SETLOCAL EnableDelayedExpansion
-	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
-	echo %height% 2>nul >nul
-	GOTO startcls
-
-
-:git
-	start "" %gitlink%
-	echo %height%
-	goto startcls
-
-:yes
-@echo off
-SETLOCAL EnableExtensions
-SET EXE=hl2.exe
-FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
-  GOTO notRunning
-) ELSE (
-  GOTO Running
-)
-
-:Running
-	taskkill /IM hl2.exe /F>NUL
-	powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
-	echo %height% 2>nul >nul
-goto unpack
-
-:notRunning
-	powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
-	goto unpack
-	echo %height% 2>nul >nul
-
-:unpack
-for %%I in (
-	"%~dp0."
-)	do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-	powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
-	echo %height% 2>nul >nul
-	GOTO updatefinished
-	
-::   _____________________________________________________________________ 
-::   ---------------------------------------------------------------------
-	
 :Uninst
 taskkill /IM hl2.exe /F
 for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
@@ -406,7 +357,52 @@ echo ---------------------------------------------------------------------
 pause
 start "" "steam://rungameid/440"
 exit
-	
+
+
+:WindowSizecommand
+	echo %height% 2>nul >nul
+	GOTO startcls
+
+:rvd
+SETLOCAL EnableDelayedExpansion
+	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
+	echo %height% 2>nul >nul
+	GOTO startcls
+
+
+:git
+	start "" %gitlink%
+	echo %height%
+	goto startcls
+
+:yes
+@echo off
+SETLOCAL EnableExtensions
+SET EXE=hl2.exe
+FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
+  GOTO notRunning
+) ELSE (
+  GOTO Running
+)
+
+:Running
+	taskkill /IM hl2.exe /F>NUL
+	powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
+	echo %height% 2>nul >nul
+goto unpack
+
+:notRunning
+	powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
+	goto unpack
+	echo %height% 2>nul >nul
+
+:unpack
+for %%I in (
+	"%~dp0."
+)	do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
+	powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%ParentFolderName%' -Force
+	echo %height% 2>nul >nul
+	GOTO updatefinished
 	
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------

@@ -235,10 +235,9 @@ for %%I in (
 	echo %UpdateVer2%
 	
 echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
-
+echo -[ Y/N/ HELP ]-------------------------------------------------------
 SET choice=
-SET /p choice=Proceed? [ Y/N/ HELP ]: 
+SET /p choice=Proceed?: 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yes
@@ -437,10 +436,12 @@ echo.
 echo.
 echo.
 echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo -[ Y/N/ HELP ]-------------------------------------------------------
 echo %height% 2>nul >nul
+
+
 SET choice=
-SET /p choice=Proceed? [ Y/N/ HELP ]: 
+SET /p choice=Proceed?: 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO resyes
@@ -619,6 +620,10 @@ SET /p choice=Command:
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
+:gitl
+	start "" %gitlink%
+	GOTO startinstalstate
+
 :startinstalstate
 cls
 echo .....................................................................
@@ -690,10 +695,9 @@ for /D %%I in ("%~dp0."
 
    
 echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
-
+echo -[ Y/N/ DIRQ / GIT ]-------------------------------------------------
 SET choice=
-SET /p choice=Proceed? [ Y/N/ DIRQ ]: 
+SET /p choice=Command: 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yesINSTALL
@@ -706,6 +710,10 @@ SET /p choice=Proceed? [ Y/N/ DIRQ ]:
 	IF '%choice%'=='dir' GOTO dirquery
 	IF '%choice%'=='DIR' GOTO dirquery
 	
+	IF '%choice%'=='g' GOTO gitl
+	IF '%choice%'=='G' GOTO gitl
+	IF '%choice%'=='git' GOTO gitl
+	IF '%choice%'=='GIT' GOTO gitl
 
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------	
@@ -749,21 +757,16 @@ echo ____________________ SEARCHING FOR TF2 INSTALL ______________________
 echo ---------------------------------------------------------------------
 echo.
 echo.
-for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
-  set "DEL=%%a"
-)
-call :colorEcho 0E "                  Please wait, this may take a while"
 
-:colorEcho
-<nul set /p ".=%DEL%" > "%~2"
-findstr /v /a:%1 /R "^$" "%~2" nul
-del "%~2" > nul 2>&1i
+echo             [93mPlease wait, this may take a while.[33m
+
 echo.
 echo.
 echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
+echo %height% 2>nul >nul
 
 for /f tokens^=1*delims^=: %%i in ('
 fsutil fsinfo drives')do set "_drvs=%%~j"

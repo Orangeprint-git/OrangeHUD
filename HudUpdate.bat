@@ -248,7 +248,6 @@ SET /p choice=Proceed?:
 	IF '%choice%'=='y' GOTO yes
 	IF '%choice%'=='N' GOTO no
 	IF '%choice%'=='n' GOTO no
-	
 	IF '%choice%'=='g' GOTO git
 	IF '%choice%'=='G GOTO git
 	IF '%choice%'=='git GOTO git
@@ -256,32 +255,25 @@ SET /p choice=Proceed?:
 	IF '%choice%'=='GIT' GOTO git
 	IF '%choice%'=='Gi' GOTO git
 	IF '%choice%'=='GI' GOTO git
-	
 	IF '%choice%'=='r' GOTO Resources
 	IF '%choice%'=='R' GOTO Resources
 	IF '%choice%'=='re GOTO Resources
 	IF '%choice%'=='RE' GOTO Resources
 	IF '%choice%'=='res' GOTO Resources
 	IF '%choice%'=='RES' GOTO Resources
-	
 	IF '%choice%'=='' GOTO startcls
-	
 	IF '%choice%'=='rl' GOTO rvd
 	IF '%choice%'=='RL' GOTO rvd	
-	
 	IF '%choice%'=='q' GOTO exit
 	IF '%choice%'=='Q' GOTO exit
 	IF '%choice%'=='quit' GOTO exit
 	IF '%choice%'=='QUIT' GOTO exit
-	
 	IF '%choice%'=='h' GOTO help
 	IF '%choice%'=='H' GOTO help
 	IF '%choice%'=='help' GOTO help
 	IF '%choice%'=='HELP' GOTO help
-	
 	IF '%choice%'=='s' GOTO WindowSizecommand
 	IF '%choice%'=='S' GOTO WindowSizecommand
-	
 	IF '%choice%'=='install' GOTO startinstalstate
 	IF '%choice%'=='INSTALL' GOTO startinstalstate
 	
@@ -597,36 +589,28 @@ SET /p choice=Command:
 	IF '%choice%'=='GIT' GOTO git
 	IF '%choice%'=='Gi' GOTO git
 	IF '%choice%'=='GI' GOTO git
-	
 	IF '%choice%'=='r' GOTO Resources
 	IF '%choice%'=='R' GOTO Resources
 	IF '%choice%'=='re GOTO Resources
 	IF '%choice%'=='RE' GOTO Resources
 	IF '%choice%'=='res' GOTO Resources
 	IF '%choice%'=='RES' GOTO Resources
-	
 	IF '%choice%'=='' GOTO help
-	
 	IF '%choice%'=='reloadverdata' GOTO RVD
 	IF '%choice%'=='rvd' GOTO RVD
 	IF '%choice%'=='RVD' GOTO RVD	
-	
 	IF '%choice%'=='q' GOTO exit
 	IF '%choice%'=='Q' GOTO exit
 	IF '%choice%'=='quit' GOTO exit
 	IF '%choice%'=='QUIT' GOTO exit
-	
 	IF '%choice%'=='b' GOTO %startfunc%
 	IF '%choice%'=='B' GOTO %startfunc%
 	IF '%choice%'=='back' GOTO %startfunc%
 	IF '%choice%'=='BACK' GOTO %startfunc%
-	
 	IF '%choice%'=='s' GOTO WindowSizecommand
 	IF '%choice%'=='S' GOTO WindowSizecommand
-	
 	IF '%choice%'=='install' GOTO startinstalstate
 	IF '%choice%'=='INSTALL' GOTO startinstalstate
-	
 	IF '%choice%'=='dirq' GOTO dirquery
 	IF '%choice%'=='DIRQ' GOTO dirquery
 	IF '%choice%'=='dir' GOTO dirquery

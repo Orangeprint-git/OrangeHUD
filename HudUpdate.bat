@@ -219,9 +219,9 @@ for /D %%I in ("%~dp0.
 
 
 if %UpdateVer2% GEQ %UpdateVer% (
-	echo %UpdateVer% [32mUP TO DATE[33m
+	echo %UpdateVer2% [32mUP TO DATE[33m
 ) ELSE (
-	echo %UpdateVer% [31mOUTDATED[33m
+	echo %UpdateVer2% [31mOUTDATED[33m
 )
 
 ::Date and time of last installed version.
@@ -236,10 +236,10 @@ for %%I in (
 ::latest github from UpdateVer: line in UpdateLog.txt
 	echo.
 	echo  newest github version:
-	echo %UpdateVer2%
+	echo %UpdateVer%
 	
 echo _____________________________________________________________________
-echo -------------------------------------------------------[93m[ Y/N/ HELP ][33m-
+echo [93m[ Y/N/ HELP ][33m--------------------------------------------------------
 SET choice=
 SET /p choice=Proceed?: 
 
@@ -440,7 +440,7 @@ echo.
 echo.
 echo.
 echo _____________________________________________________________________
-echo -------------------------------------------------------[93m[ Y/N/ HELP ][33m-
+echo [93m[ Y/N/ HELP ][33m--------------------------------------------------------
 echo %height% 2>nul >nul
 
 
@@ -699,7 +699,7 @@ for /D %%I in ("%~dp0."
 ::finds UpdateVer: line in UpdateLogIN.txt which is the currently installed version.
 	findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 	if %errorlevel%==0 (
-	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%h
+	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer3=%%h
 )
 
 ::latest github from UpdateVer: line in UpdateLog.txt
@@ -707,13 +707,13 @@ for /D %%I in ("%~dp0."
 	echo  or DIRQ to look for tf2 installation.
 	echo.
 	echo  newest github version:
-	echo %UpdateVer%
+	echo %UpdateVer3%
 	echo.
 	
 
    
 echo _____________________________________________________________________
-echo -------------------------------------------------[93m[ Y/N/ DIRQ / GIT ][33m-
+echo [93m[ Y/N/ DIRQ / GIT ][33m--------------------------------------------------
 SET choice=
 SET /p choice=Command: 
 

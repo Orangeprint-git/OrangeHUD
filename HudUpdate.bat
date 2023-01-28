@@ -464,7 +464,7 @@ del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
-ECHO Start the game, press any key to continue, or click X to close.
+ECHO Press ENTER to start the game, or click X to close.
 pause >nul
 start "" "steam://rungameid/440"
 

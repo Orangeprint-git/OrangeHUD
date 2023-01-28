@@ -259,7 +259,7 @@ echo.
 echo _____________________________________________________________________
 echo [93m[ Y/N/ HELP / GIT / UNINSTALL ][33m--------------------------------------
 SET choice=
-SET /p choice=Proceed?[93m : 
+SET /p choice=Command[93m : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yes
@@ -528,12 +528,12 @@ SET choice=
 SET /p choice=Proceed?[93m : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
-	IF '%choice%'=='Y' GOTO resyes
-	IF '%choice%'=='y' GOTO resyes
-	IF '%choice%'=='N' GOTO startcls
-	IF '%choice%'=='n' GOTO startcls
-	IF '%choice%'=='b' GOTO startcls
-	IF '%choice%'=='B' GOTO startcls
+	IF '%choice%'=='Y' GOTO %startfunc%
+	IF '%choice%'=='y' GOTO %startfunc%
+	IF '%choice%'=='N' GOTO %startfunc%
+	IF '%choice%'=='n' GOTO %startfunc%
+	IF '%choice%'=='b' GOTO %startfunc%
+	IF '%choice%'=='B' GOTO %startfunc%
 	IF '%choice%'=='back' GOTO %startfunc%
 	IF '%choice%'=='BACK' GOTO %startfunc%
 	IF '%choice%'=='c' GOTO startcls
@@ -543,6 +543,8 @@ SET /p choice=Proceed?[93m :
 	IF '%choice%'=='Q' GOTO :exit
 	IF '%choice%'=='quit' GOTO :exit
 	IF '%choice%'=='QUIT' GOTO :exit
+	
+	IF '%choice%'=='' GOTO %startfunc%
 
 
 ::   _____________________________________________________________________ 
@@ -658,15 +660,15 @@ echo .....................................................................
 echo _____________________________________________________________________    
 echo _____________________________ [93mOHUD HELP[33m _____________________________
 echo ---------------------------------------------------------------------
-echo  %startfunc%
+echo.
 echo  Commands                         I
 echo                                   I
-echo  Resources: ............. [93mR [33m      I  Reload ver file........[93m RL[33m 
-echo  Github: ................ [93mG [33m      I  install debug .........[93m INSTALL[33m 
-echo  Quit: .................. [93mQ [33m      I  Scan where tf2 + ins ..[93m DIRQ[33m 
-echo  Back: .................. [93mB [33m      I  ....................... 
-echo        ..................         I  .......................
-echo        ..................         I  .......................
+echo    Resources: ............. [93mR[33m     I   ..........................
+echo    Github: ................ [93mG[33m     I   ..........................
+echo    Quit: .................. [93mQ[33m     I   ..........................
+echo    Back: .................. [93mB[33m     I   ..........................
+echo    Scan where tf2 + ins ... [93mDIRQ[33m  I   ..........................
+echo    Reload ver file......... [93mRL[33m    I   ..........................
 echo                                   I  
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
@@ -689,7 +691,7 @@ SET /p choice=Command[93m :
 	IF '%choice%'=='RE' GOTO Resources
 	IF '%choice%'=='res' GOTO Resources
 	IF '%choice%'=='RES' GOTO Resources
-	IF '%choice%'=='' GOTO help
+	IF '%choice%'=='' GOTO %startfunc%
 	IF '%choice%'=='reloadverdata' GOTO RVD
 	IF '%choice%'=='rvd' GOTO RVD
 	IF '%choice%'=='RVD' GOTO RVD	
@@ -701,10 +703,6 @@ SET /p choice=Command[93m :
 	IF '%choice%'=='B' GOTO %startfunc%
 	IF '%choice%'=='back' GOTO %startfunc%
 	IF '%choice%'=='BACK' GOTO %startfunc%
-	IF '%choice%'=='s' GOTO WindowSizecommand
-	IF '%choice%'=='S' GOTO WindowSizecommand
-	IF '%choice%'=='install' GOTO startinstalstate
-	IF '%choice%'=='INSTALL' GOTO startinstalstate
 	IF '%choice%'=='dirq' GOTO dirquery
 	IF '%choice%'=='DIRQ' GOTO dirquery
 	IF '%choice%'=='dir' GOTO dirquery

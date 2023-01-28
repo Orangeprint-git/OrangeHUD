@@ -43,6 +43,7 @@ echo %height% 2>nul >nul
 	set dlascii=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/Orange.txt
 	
 	set TXTECHO=Orange.txt
+	set DISCORD=Orangeprint#1170
 	
 :conerr
 ::Update version check
@@ -112,10 +113,9 @@ echo                           [31mConnection error.[33m
 echo.
 echo.
 echo.
-echo.
+echo                                           Discord@ [93m%DISCORD%[33m
 echo _____________________________________________________________________ 
-echo ---------------------------------------------------------------------
-echo %height% 2>nul >nul
+echo -----------------------------------------[93m[ Hit ENTER to try again. ][33m-
 SET choice=
 SET /p choice=Reconnect? [93m:
 
@@ -216,7 +216,7 @@ for %%I in (
 ::latest github from UpdateVer: line in UpdateLog.txt
 	echo.
 	echo  newest github version:
-	echo [93m%UpdateVer%[33m
+	echo [93m%UpdateVer%[33m                      Discord@ [93m%DISCORD%[33m
 echo.	
 echo _____________________________________________________________________
 echo -[93m[ Y/N/ HELP / GIT / UNINSTALL ][33m------------[93m[ Hit ENTER to reload. ][33m-
@@ -600,15 +600,15 @@ for /D %%I in ("%~dp0."
 	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer3=%%h
 )
 
-	echo  enter [93m[ Y / N ][33m Select custom folder.
-	echo  or [93m[ DIRQ ][33m to Automatically check TF2 dir.
+	echo  [93m[ Y / N ][33m Select custom folder.
+	echo  [93m[ DIRQ ][33m to Automatically check TF2 dir.
+	echo  [93m[ GIT ][33m for Github.
+	echo  [93m[ HELP ][33m for help menu.
 	echo.
 	echo  newest github version:
-	echo [93m%UpdateVer3%[33m
-	echo.
+	echo [93m%UpdateVer3%[33m                      Discord@ [93m%DISCORD%[33m
 	
 
-echo.
 echo _____________________________________________________________________
 echo -[93m[ Y/N/ DIRQ / GIT / HELP ][33m-----------------[93m[ Hit ENTER to reload. ][33m-
 SET choice=
@@ -696,19 +696,27 @@ echo ---------------------------------------------------------------------
 echo.
 echo.
 echo.
-
-echo Install Directory:
-for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-set "filename=%_fpath%"
-For %%A in ("%filename%") do (
-	echo "%%~dA\...%%~pAtf\custom"
-	echo.
-)
+echo.
+echo  Install to Found Directory?:
+echo  [93m%_fpath%\tf\custom[33m 
+echo.
 echo.
 echo.
 echo.
 echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo -[93m[ Y/N ][33m-----------------------------------[93m[ Hit ENTER to go back. ][33m-
+SET choice=
+SET /p choice=Proceed?[93m : 
+
+	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
+	IF '%choice%'=='Y' GOTO ZDIRQINSTALLyes
+	IF '%choice%'=='y' GOTO ZDIRQINSTALLyes
+	IF '%choice%'=='N' GOTO startinstalstate
+	IF '%choice%'=='n' GOTO startinstalstate
+	
+	IF '%choice%'=='' GOTO startinstalstate
+	
+:ZDIRQINSTALLyes	
 powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
 powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%_fpath%tf\custom' -Force
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul

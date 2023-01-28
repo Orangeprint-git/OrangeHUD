@@ -218,6 +218,15 @@ for /D %%I in ("%~dp0.
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
+
+::Version error
+IF EXIST "UpdateLogIN.txt" (
+	set ULIN=UpdateLogIN.txt
+) ELSE (
+echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.[33m" > OHUDtemp.txt
+	set ULIN=OHUDtemp.txt
+)
+
 ::finds UpdateVer: line in UpdateLog.txt
 	findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 	if %errorlevel%==0 (

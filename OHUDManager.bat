@@ -354,10 +354,10 @@ echo.
 echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
-ECHO  Press ENTER to start the game, or click X to close.
+ECHO  Press ENTER to go back to start, or click X to close.
 pause >nul
-start "" "steam://rungameid/440"
-exit
+GOTO %startfunc%
+
 
 
 :WindowSizecommand

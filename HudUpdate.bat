@@ -93,6 +93,7 @@ IF EXIST %ParentFolderName%\OrangeHUD (
 ::   ---------------------------------------------------------------------
 
 :noconnection
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -143,7 +144,7 @@ echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 SET choice=
-SET /p choice=Reconnect? :
+SET /p choice=Reconnect? [93m:
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	
@@ -164,6 +165,7 @@ SET /p choice=Reconnect? :
 
 
 :startcls
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -257,12 +259,12 @@ for %%I in (
 ::latest github from UpdateVer: line in UpdateLog.txt
 	echo.
 	echo  newest github version:
-	echo %UpdateVer%
+	echo [93m%UpdateVer%[33m
 echo.	
 echo _____________________________________________________________________
 echo [93m[ Y/N/ HELP / GIT ][33m--------------------------------------------------
 SET choice=
-SET /p choice=Proceed?: 
+SET /p choice=Proceed?[93m : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yes
@@ -304,6 +306,7 @@ SET /p choice=Proceed?:
 ::   ---------------------------------------------------------------------
 
 :Uninst
+[33m
 taskkill /IM hl2.exe /F
 for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 rmdir /S /Q "%ParentFolderName%\OrangeHUD-main" 9<"%~f0" 2>nul 
@@ -408,6 +411,7 @@ for %%I in (
 ::   ---------------------------------------------------------------------
 
 :updatefinished
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -470,6 +474,7 @@ exit
 ::   ---------------------------------------------------------------------
 
 :Resources
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -520,7 +525,7 @@ echo %height% 2>nul >nul
 
 
 SET choice=
-SET /p choice=Proceed?: 
+SET /p choice=Proceed?[93m : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO resyes
@@ -544,6 +549,7 @@ SET /p choice=Proceed?:
 ::   ---------------------------------------------------------------------
 
 :no
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -615,6 +621,7 @@ exit
 ::   ---------------------------------------------------------------------
 
 :help
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -664,7 +671,7 @@ echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 SET choice=
-SET /p choice=Command: 
+SET /p choice=Command[93m : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	
@@ -712,6 +719,7 @@ SET /p choice=Command:
 	
 
 :startinstalstate
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -776,7 +784,7 @@ for /D %%I in ("%~dp0."
 	echo  or [93m[ DIRQ ][33m to scan for tf2 installation.
 	echo.
 	echo  newest github version:
-	echo %UpdateVer3%
+	echo [93m%UpdateVer3%[33m
 	echo.
 	
 
@@ -784,7 +792,7 @@ echo.
 echo _____________________________________________________________________
 echo [93m[ Y/N/ DIRQ / GIT ][33m--------------------------------------------------
 SET choice=
-SET /p choice=Command: 
+SET /p choice=Command[93m : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yesINSTALL
@@ -817,6 +825,7 @@ SET /p choice=Command:
 
 
 :dirquery
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -876,6 +885,7 @@ call dir/b/a-d/s %_drvs:\=\hl2.exe% 2^>nul
 
 
 :dirqinstall
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -932,6 +942,7 @@ powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
 powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%_fpath%tf\custom' -Force
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -1014,6 +1025,7 @@ EXIT
 
 :yesINSTALL
 :selectlocation
+[33m
 cls
 echo .....................................................................
 echo .....................................................................
@@ -1111,7 +1123,13 @@ echo.
 echo.
 echo.
 echo  Selected Path:
-echo  %_fpath%
+
+
+echo  [93m%_fpath%[33m
+	IF "%_fpath%" == ""  GOTO startinstalstate
+)
+
+
 echo.
 echo.
 echo.
@@ -1120,7 +1138,7 @@ echo.
 echo _____________________________________________________________________
 echo [93m[ Y/N ][33m--------------------------------------------------
 SET choice=
-SET /p choice=Proceed?: 
+SET /p choice=Proceed?[93m : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yesSELECT
@@ -1159,6 +1177,7 @@ goto unpack
 
 
 :noINSTALL
+[33m
 cls
 echo .....................................................................
 echo .....................................................................

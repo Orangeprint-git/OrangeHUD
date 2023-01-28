@@ -905,6 +905,7 @@ goto unpack
 	
 echo @echo off&setlocal >> "%cd%\OHUDManager-Shortcut.bat"
 echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDManager-Shortcut.bat" 
+echo mode   
 echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDManager-Shortcut.bat"
 echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDManager-Shortcut.bat"
 

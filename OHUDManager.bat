@@ -43,6 +43,7 @@ echo %height% 2>nul >nul
 	
 :conerr
 ::Update version check
+	SET RLVER=
 	del "UpdateLog.txt" /s /f /q 2>nul >nul
 	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
 	if %errorlevel%==0 (
@@ -266,7 +267,7 @@ for %%I in (
 	echo [93m%UpdateVer%[33m
 echo.	
 echo _____________________________________________________________________
-echo [93m[ Y/N/ HELP / GIT / UNINSTALL ][33m--------------------------------------
+echo -[93m[ Y/N/ HELP / GIT / UNINSTALL ][33m------------[93m[ Hit ENTER to reload. ][33m-
 SET choice=
 SET /p choice=Command[93m : 
 
@@ -288,7 +289,7 @@ SET /p choice=Command[93m :
 	IF '%choice%'=='RE' GOTO Resources
 	IF '%choice%'=='res' GOTO Resources
 	IF '%choice%'=='RES' GOTO Resources
-	IF '%choice%'=='' GOTO startcls
+	IF '%choice%'=='' GOTO conerr
 	IF '%choice%'=='rl' GOTO rvd
 	IF '%choice%'=='RL' GOTO rvd	
 	IF '%choice%'=='q' GOTO exit
@@ -528,7 +529,7 @@ echo.
 echo.
 echo.
 echo _____________________________________________________________________
-echo [93m[ Y/N/ HELP ][33m--------------------------------------------------------
+echo -[93m[ Y/N/ HELP ][33m-------------------------------------------------------
 echo %height% 2>nul >nul
 
 
@@ -679,7 +680,7 @@ echo    Scan where tf2 + ins ... [93mDIRQ[33m  I   ..........................
 echo    Reload ver file......... [93mRL[33m    I   ..........................
 echo                                   I  
 echo _____________________________________________________________________
-echo --------------------------------------------[93m[ hit ENTER to go back ][33m-
+echo -------------------------------------------[93m[ Hit ENTER to go back. ][33m-
 echo %height% 2>nul >nul
 SET choice=
 SET /p choice=Command[93m : 
@@ -797,7 +798,7 @@ for /D %%I in ("%~dp0."
 
 echo.
 echo _____________________________________________________________________
-echo [93m[ Y/N/ DIRQ / GIT / HELP ][33m-------------------------------------------
+echo -[93m[ Y/N/ DIRQ / GIT / HELP ][33m------------------------------------------
 SET choice=
 SET /p choice=Command[93m : 
 
@@ -1143,7 +1144,7 @@ echo.
 echo.
 echo.
 echo _____________________________________________________________________
-echo [93m[ Y/N ][33m--------------------------------------------------
+echo -[93m[ Y/N ][33m-------------------------------------------------
 SET choice=
 SET /p choice=Proceed?[93m : 
 

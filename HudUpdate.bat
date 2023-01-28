@@ -43,7 +43,7 @@ echo %height% 2>nul >nul
 	
 :conerr
 ::Update version check
-	del "%~dp0\"UpdateLog.txt 2>nul >nul
+	del "UpdateLog.txt" /s /f /q 2>nul >nul
 	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
 	if %errorlevel%==0 (
 	echo.2>nul

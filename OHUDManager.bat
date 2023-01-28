@@ -355,6 +355,7 @@ echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 ECHO  Press ENTER to go back to start, or click X to close.
+del "UpdateLogIN.txt" /s /f /q 2>nul >nul
 pause >nul
 GOTO %startfunc%
 

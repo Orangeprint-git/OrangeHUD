@@ -549,7 +549,17 @@ SET /p choice=Command[93m :
 :gitl
 	start "" %gitlink%
 	GOTO startinstalstate
-	
+
+
+:startinstalstatevererr
+	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
+	powershell -Command "Invoke-WebRequest %dlascii% -Outfile Orange.txt">nul
+	if %errorlevel%==0 (
+	echo.2>nul
+) ELSE (
+	GOTO noconnection 
+	pause 
+)
 
 :startinstalstate
 [33m
@@ -566,6 +576,8 @@ echo ___________________________ [93mOHUD INSTALLER[33m ______________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 
+
+
 ::shortened directory echo
 
 for /D %%I in ("%~dp0."
@@ -578,7 +590,7 @@ for /D %%I in ("%~dp0."
 
 ) do (
 	echo.
-	echo  %%~dA\...%%~pA"
+	echo  %CD%
 	echo.
 )
 
@@ -589,7 +601,7 @@ for /D %%I in ("%~dp0."
 )
 
 	echo  enter [93m[ Y / N ][33m Select custom folder.
-	echo  or [93m[ DIRQ ][33m to scan for tf2 installation.
+	echo  or [93m[ DIRQ ][33m to Automatically check TF2 dir.
 	echo.
 	echo  newest github version:
 	echo [93m%UpdateVer3%[33m
@@ -598,7 +610,7 @@ for /D %%I in ("%~dp0."
 
 echo.
 echo _____________________________________________________________________
-echo -[93m[ Y/N/ DIRQ / GIT / HELP ][33m------------------------------------------
+echo -[93m[ Y/N/ DIRQ / GIT / HELP ][33m-----------------[93m[ Hit ENTER to reload. ][33m-
 SET choice=
 SET /p choice=Command[93m : 
 
@@ -624,7 +636,7 @@ SET /p choice=Command[93m :
 	IF '%choice%'=='help' GOTO help
 	IF '%choice%'=='HELP' GOTO help
 	
-	IF '%choice%'=='' GOTO startinstalstate
+	IF '%choice%'=='' GOTO startinstalstatevererr
 	
 	
 

@@ -15,7 +15,7 @@ SETLOCAL EnableDelayedExpansion
 ::   ---------------------------------------------------------------------
 
 ::Launch defs
-title OHUD Update
+title OHUD Manager
 color 06
 
 ::   _____________________________________________________________________    
@@ -82,11 +82,6 @@ IF EXIST %ParentFolderName%\OrangeHUD (
 	set startfunc= startinstalstate
 	GOTO startinstalstate
 )
-
-
-
-
-
 
 
 ::   _____________________________________________________________________ 
@@ -262,7 +257,7 @@ for %%I in (
 	echo [93m%UpdateVer%[33m
 echo.	
 echo _____________________________________________________________________
-echo [93m[ Y/N/ HELP / GIT ][33m--------------------------------------------------
+echo [93m[ Y/N/ HELP / GIT / UNINSTALL ][33m--------------------------------------
 SET choice=
 SET /p choice=Proceed?[93m : 
 
@@ -349,15 +344,18 @@ echo ---------------------------------------------------------------------
 echo.
 echo.
 echo.
+echo.
 echo                         [32mProccess Finished.[33m
 
 echo.
 echo.
 echo.
 echo.
+echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
-pause
+ECHO  Press ENTER to start the game, or click X to close.
+pause >nul
 start "" "steam://rungameid/440"
 exit
 
@@ -466,7 +464,7 @@ del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
-ECHO Press ENTER to start the game, or click X to close.
+ECHO  Press ENTER to start the game, or click X to close.
 pause >nul
 start "" "steam://rungameid/440"
 
@@ -1084,7 +1082,7 @@ FOR /F "usebackq tokens=*" %%Q in (`%PScommand%`) DO (
 	set _fpath=%%Q
 	set DIRF=1
 )
-
+:confirmselectedpath
 cls
 echo .....................................................................
 echo .....................................................................
@@ -1149,7 +1147,7 @@ SET /p choice=Proceed?[93m :
 	IF '%choice%'=='N' GOTO startinstalstate
 	IF '%choice%'=='n' GOTO startinstalstate
 	
-	IF '%choice%'=='' GOTO startinstalstate
+	IF '%choice%'=='' GOTO confirmselectedpath
 	
 :yesSELECT
 SETLOCAL EnableExtensions

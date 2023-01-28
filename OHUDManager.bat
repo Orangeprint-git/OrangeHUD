@@ -574,9 +574,7 @@ for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) 
 echo _____________________________________________________________________    
 echo ___________________________ [93mOHUD INSTALLER[33m __________________________
 echo ---------------------------------------------------------------------
-echo %height% 2>nul >nul
-
-
+echo %height% 2>nul >nul  
 
 ::shortened directory echo
 
@@ -676,11 +674,21 @@ SETLOCAL EnableDelayedExpansion
 FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
     set _fpath=%%A %%B
 )
+
+
+IF EXIST %_fpath%tf\custom\OrangeHUD-main (
+	SET ULIN2="%_fpath%\tf\custom\OrangeHUD-main\UpdateLogIN.txt"
+	set CINVERNSTALL=1
+) ELSE (
+	set CINVERNSTALL=0
+)
+
 GOTO dirqinstall
 pause
 
 
 :dirqinstall
+[33m
 [33m
 cls
 
@@ -696,15 +704,18 @@ echo ---------------------------------------------------------------------
 echo.
 echo.
 echo.
+
 echo.
 echo  Install to Found Directory?:
 echo  [93m%_fpath%\tf\custom[33m 
+
 echo.
 echo.
 echo.
 echo.
 echo _____________________________________________________________________
 echo -[93m[ Y/N ][33m-----------------------------------[93m[ Hit ENTER to go back. ][33m-
+
 SET choice=
 SET /p choice=Proceed?[93m : 
 
@@ -714,7 +725,7 @@ SET /p choice=Proceed?[93m :
 	IF '%choice%'=='N' GOTO startinstalstate
 	IF '%choice%'=='n' GOTO startinstalstate
 	
-	IF '%choice%'=='' GOTO startinstalstate
+	IF '%choice%'=='' GOTO dirqinstall
 	
 :ZDIRQINSTALLyes	
 powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
@@ -760,8 +771,18 @@ MOVE /y "UpdateLog.txt" "%_fpath%\OrangeHUD-main\UpdateLogIN.txt"2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
 del "Orange.txt" /s /f /q 2>nul >nul
 del "OHUD.zip" /s /f /q 2>nul >nul
+
+echo @echo off&setlocal >> "%cd%\OHUDUpdater-Shortcut.bat"
+echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDUpdater-Shortcut.bat" 
+echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDUpdater-Shortcut.bat"
+echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDManager-Shortcut.bat"
+del "%cd%\OHUDManager.bat" /s /f /q 2>nul >nul
+
+
+
 Echo Exit: press any key.
 pause >nul
+del "OHUDManager.bat" /s /f /q 2>nul >nul
 exit
 
 
@@ -881,7 +902,13 @@ goto unpack
 	del "UpdateLog.txt" /s /f /q 2>nul >nul
 	del "Orange.txt" /s /f /q 2>nul >nul
 	del "OHUDtemp.txt" /s /f /q 2>nul >nul
-	del "OHUD.zip" /s /f /q 2>nul >nuly
+	del "OHUD.zip" /s /f /q 2>nul >nul
+	
+	echo @echo off&setlocal >> "%cd%\OHUDUpdater-Shortcut.bat"
+	echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDUpdater-Shortcut.bat" 
+	echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDManager-Shortcut.bat"
+	echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDUpdater-Shortcut.bat"
+	del "%cd%\OHUDManager.bat" /s /f /q 2>nul >nul
 	EXIT
 
 
@@ -916,6 +943,7 @@ echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
+del "Orange.txt" /s /f /q 2>nul >nul
 Echo Exit: press any key.
 pause >nul
 :exit

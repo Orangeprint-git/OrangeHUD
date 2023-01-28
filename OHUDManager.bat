@@ -773,14 +773,13 @@ del "Orange.txt" /s /f /q 2>nul >nul
 del "OHUD.zip" /s /f /q 2>nul >nul
 
 echo @echo off&setlocal >> "%cd%\OHUDManager-Shortcut.bat"
-echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDManager-Shortcut.batt" 
+echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDManager-Shortcut.bat" 
 echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDManager-Shortcut.bat"
 echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDManager-Shortcut.bat"
-del "%cd%\OHUDManager.bat" /s /f /q 2>nul >nul
 
 
 
-Echo Exit: press any key.
+Echo  Hit ENTER to exit
 pause >nul
 del "OHUDManager.bat" /s /f /q 2>nul >nul
 exit
@@ -904,12 +903,18 @@ goto unpack
 	del "OHUDtemp.txt" /s /f /q 2>nul >nul
 	del "OHUD.zip" /s /f /q 2>nul >nul
 	
-	echo @echo off&setlocal >> "%cd%\OHUDManager-Shortcut.bat"
-	echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDManager-Shortcut.bat" 
-	echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDManager-Shortcut.bat"
-	echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDManager-Shortcut.bat"
-	del "%cd%\OHUDManager.bat" /s /f /q 2>nul >nul
-	EXIT
+echo @echo off&setlocal >> "%cd%\OHUDManager-Shortcut.bat"
+echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDManager-Shortcut.bat" 
+echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDManager-Shortcut.bat"
+echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDManager-Shortcut.bat"
+
+
+
+Echo  Hit ENTER to exit
+pause >nul
+del "OHUDManager.bat" /s /f /q 2>nul >nul
+exit
+
 
 
 

@@ -884,12 +884,13 @@ echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 
-for /f tokens^=1*delims^=: %%i in ('
-fsutil fsinfo drives')do set "_drvs=%%~j"
-
-for /f tokens^=*^delims^=? %%i in ('
-call dir/b/a-d/s %_drvs:\=\hl2.exe% 2^>nul 
-')do set "_fpath=%%~dpi" && set "_file=%%~fi" && goto :dirqinstall
+@echo off&setlocal
+SETLOCAL EnableDelayedExpansion
+FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
+    set _fpath=%%A %%B
+)
+GOTO dirqinstall
+pause
 
 
 :dirqinstall
@@ -947,7 +948,7 @@ echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
-powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%_fpath%tf\custom' -Force
+powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%_fpath%\tf\custom' -Force
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 
 [33m

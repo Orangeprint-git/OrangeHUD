@@ -948,7 +948,7 @@ echo.
 echo _____________________________________________________________________
 echo ---------------------------------------------------------------------
 powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
-powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%_fpath%\tf\custom' -Force
+powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%_fpath%tf\custom' -Force
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 
 [33m

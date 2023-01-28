@@ -1,1 +1,1 @@
-UpdateVer: ERR:InstalledFromGIT-UpdateToFix
+UpdateVer: ERR:InstalledDirectlyFrom-Github-UpdateToFix

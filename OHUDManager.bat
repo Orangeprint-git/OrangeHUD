@@ -689,7 +689,6 @@ pause
 
 :dirqinstall
 [33m
-[33m
 cls
 
 for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
@@ -732,6 +731,7 @@ powershell -Command "Invoke-WebRequest %dllink% -Outfile OHUD.zip"
 powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath '%_fpath%tf\custom' -Force
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 
+
 [33m
 cls
 
@@ -772,10 +772,21 @@ del "UpdateLog.txt" /s /f /q 2>nul >nul
 del "Orange.txt" /s /f /q 2>nul >nul
 del "OHUD.zip" /s /f /q 2>nul >nul
 
-echo @echo off&setlocal >> "%cd%\OHUDManager-Shortcut.bat"
-echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDManager-Shortcut.bat" 
-echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDManager-Shortcut.bat"
-echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDManager-Shortcut.bat"
+FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
+    set TF2DIR=%%A %%B
+)
+
+cd %TF2DIR%\tf\custom\OrangeHUD-main
+echo Set oWS = WScript.CreateObject("WScript.Shell") > OHUDManager.vbs
+echo sLinkFile = "%userprofile%\Desktop\OHUDManager.lnk" >> OHUDManager.vbs
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> OHUDManager.vbs
+echo oLink.TargetPath = "%TF2DIR%\tf\custom\OrangeHUD-main\OHUDManager.bat" >> OHUDManager.vbs
+echo oLink.WorkingDirectory = "%TF2DIR%\tf\custom\OrangeHUD-main" >> OHUDManager.vbs
+echo oLink.Description = "OrangeHUD Manager" >> OHUDManager.vbs
+echo oLink.IconLocation = "%TF2DIR%\tf\custom\OrangeHUD-main\Orangeprint.ico" >> OHUDManager.vbs
+echo oLink.Save >> OHUDManager.vbs
+cscript OHUDManager.vbs>nul
+del OHUDManager.vbs
 
 
 
@@ -903,11 +914,21 @@ goto unpack
 	del "OHUDtemp.txt" /s /f /q 2>nul >nul
 	del "OHUD.zip" /s /f /q 2>nul >nul
 	
-echo @echo off&setlocal >> "%cd%\OHUDManager-Shortcut.bat"
-echo SETLOCAL EnableDelayedExpansion >> "%cd%\OHUDManager-Shortcut.bat" 
-echo mode   
-echo cd /d D:\SteamLibrary\steamapps\common\Team Fortress 2\tf\custom\OrangeHUD-main >> "%cd%\OHUDManager-Shortcut.bat"
-echo START "" "%_fpath%\OrangeHUD-main\OHUDManager.bat" >> "%cd%\OHUDManager-Shortcut.bat"
+FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
+    set TF2DIR=%%A %%B
+)
+
+cd %TF2DIR%\tf\custom\OrangeHUD-main
+echo Set oWS = WScript.CreateObject("WScript.Shell") > OHUDManager.vbs
+echo sLinkFile = "%userprofile%\Desktop\OHUDManager.lnk" >> OHUDManager.vbs
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> OHUDManager.vbs
+echo oLink.TargetPath = "%TF2DIR%\tf\custom\OrangeHUD-main\OHUDManager.bat" >> OHUDManager.vbs
+echo oLink.WorkingDirectory = "%TF2DIR%\tf\custom\OrangeHUD-main" >> OHUDManager.vbs
+echo oLink.Description = "OrangeHUD Manager" >> OHUDManager.vbs
+echo oLink.IconLocation = "%TF2DIR%\tf\custom\OrangeHUD-main\Orangeprint.ico" >> OHUDManager.vbs
+echo oLink.Save >> OHUDManager.vbs
+cscript OHUDManager.vbs>nul
+del OHUDManager.vbs
 
 
 

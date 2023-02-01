@@ -377,6 +377,23 @@ MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
 ECHO  Press ENTER to go back to start, or click X to close.
 pause >nul
+
+FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
+    set TF2DIR=%%A %%B
+)
+
+cd %TF2DIR%\tf\custom\OrangeHUD-main
+echo Set oWS = WScript.CreateObject("WScript.Shell") > OHUDManager.vbs
+echo sLinkFile = "%userprofile%\Desktop\OHUDManager.lnk" >> OHUDManager.vbs
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> OHUDManager.vbs
+echo oLink.TargetPath = "%TF2DIR%\tf\custom\OrangeHUD-main\OHUDManager.bat" >> OHUDManager.vbs
+echo oLink.WorkingDirectory = "%TF2DIR%\tf\custom\OrangeHUD-main" >> OHUDManager.vbs
+echo oLink.Description = "OrangeHUD Manager" >> OHUDManager.vbs
+echo oLink.IconLocation = "%TF2DIR%\tf\custom\OrangeHUD-main\Orangeprint.ico" >> OHUDManager.vbs
+echo oLink.Save >> OHUDManager.vbs
+cscript OHUDManager.vbs>nul
+del OHUDManager.vbs
+
 GOTO %startfunc%
 
 ::   _____________________________________________________________________ 

@@ -18,6 +18,11 @@ SETLOCAL EnableDelayedExpansion
 title OHUD Manager
 color 06
 
+
+:: highlight color is calculated from the logo ASCII at the bottom.
+set ColOrange=[38;2;247;128;42m
+
+
 ::   _____________________________________________________________________    
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
@@ -28,25 +33,25 @@ color 06
 :: uses powershell to call for the window size.
 
 FOR /F "delims=" %%G in ('powershell.exe -executionpolicy unrestricted $host.UI.RawUI.WindowSize.Height') do SET height=%%G
-	IF /I "%height%" GEQ "69" mode con: cols=69 lines=49
-	IF /I "%height%" LEQ "69" mode con: cols=69 lines=49
+	IF /I "%height%" GEQ "69" mode con: cols=71 lines=46
+	IF /I "%height%" LEQ "69" mode con: cols=71 lines=46
 echo %height% 2>nul >nul
 
    
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
-::links
+:: links
 	set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 	set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 	set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
 	set dlascii=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/Orange.txt
 	
-	set TXTECHO=Orange.txt
+	set orange=Orange.ini
 	set DISCORD=Orangeprint#1170
 	
 :conerr
-::Update version check
+:: Update version check
 	SET RLVER=
 	del "UpdateLog.txt" /s /f /q 2>nul >nul
 	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
@@ -61,11 +66,11 @@ echo %height% 2>nul >nul
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
-::Version error
+:: Version error
 IF EXIST "UpdateLogIN.txt" (
 	set ULIN=UpdateLogIN.txt
 ) ELSE (
-echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.[33m" > OHUDtemp.txt
+echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.%ColOrange%" > OHUDtemp.txt
 	set ULIN=OHUDtemp.txt
 )
 
@@ -89,35 +94,30 @@ IF EXIST %ParentFolderName%\OrangeHUD (
 	GOTO startinstalstate
 )
 
-
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
 :noconnection
-[33m
+%ColOrange%
 cls
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
-echo _____________________________________________________________________    
-echo _____________________________________________________________________ 
-echo ---------------------------------------------------------------------
+call :ASCIILOGO
+echo  _____________________________________________________________________    
+echo  _____________________________________________________________________ 
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
-echo                           [31mConnection error.[33m
+echo                           [31mConnection error.%ColOrange%
 
 
 echo.
 echo.
 echo.
-echo                                           Discord@ [93m%DISCORD%[33m
-echo _____________________________________________________________________ 
-echo -----------------------------------------[93m[ Hit ENTER to try again. ][33m-
+echo                                           Discord@ %ColHigh%%DISCORD%%ColOrange%
+echo  _____________________________________________________________________ 
+echo  -----------------------------------------%ColHigh%[ Hit ENTER to try again. ]%ColOrange%-
 SET choice=
-SET /p choice=Reconnect? [93m:
+SET /p choice=Reconnect? %ColHigh%:
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	
@@ -138,21 +138,15 @@ SET /p choice=Reconnect? [93m:
 
 
 :startcls
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
-
-echo _____________________________________________________________________    
-echo ________________ [93mUPDATING FILES IN CURRENT DIRECTORY[33m ________________ 
-echo ---------------------------------------------------------------------
+call :ASCIILOGO    
+echo  ________________ %ColHigh%UPDATING FILES IN CURRENT DIRECTORY%ColOrange% ________________ 
+echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 
-::shortened directory echo
+:: shortened directory echo
 
 for /D %%I in ("%~dp0.
 ) do for %%J in (
@@ -172,24 +166,24 @@ for /D %%I in ("%~dp0.
 ::   ---------------------------------------------------------------------
 
 
-::Version error
+:: Version error
 IF EXIST "UpdateLogIN.txt" (
 	set ULIN=UpdateLogIN.txt
 ) ELSE (
-echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.[33m" > OHUDtemp.txt
+echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.%ColOrange%" > OHUDtemp.txt
 	set ULIN=OHUDtemp.txt
 )
 
-::finds UpdateVer: line in UpdateLog.txt
+:: finds UpdateVer: line in UpdateLog.txt
 	findstr "UpdateVer" "UpdateLog.txt" 2>nul >nul
 	if %errorlevel%==0 (
 	for /f "tokens=1,* delims=:" %%c in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%d
 ) ELSE (
-	do set UpdateVer=[31mERR[33m
+	do set UpdateVer=[31mERR%ColOrange%
 ) 
 
 
-::finds UpdateVer: line in UpdateLogIN.txt which is the currently installed version.
+:: finds UpdateVer: line in UpdateLogIN.txt which is the currently installed version.
 	findstr "UpdateVer" "%ULIN%" 2>nul >nul
 	if %errorlevel%==0 (
 	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "%ULIN%"') do set UpdateVer2=%%h
@@ -199,29 +193,29 @@ echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.[33m" > OHUDtemp.txt
 
 
 if %UpdateVer2% GEQ %UpdateVer% (
-	echo %UpdateVer2% [32mUP TO DATE[33m 
+	echo %ColHigh%%UpdateVer2% [32mUP TO DATE%ColOrange% 
 ) ELSE (
-	echo %UpdateVer2% [31mOUTDATED[33m
+	echo %ColHigh%%UpdateVer2% [31mOUTDATED%ColOrange%
 )
 
-::Date and time of last installed version.
+:: Date and time of last installed version.
 for %%I in (
 	"%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
-	set "filename=%ParentFolderName%\OrangeHUD-main"
+	set "filename=%ParentFolderName%\OrangeHUD-main\UpdateLogIN.txt"
 	For %%A in ("%filename%"
 ) do (
-	echo  %%~tA
+	echo  Installed: %%~tA
 )
 
 ::latest github from UpdateVer: line in UpdateLog.txt
 	echo.
 	echo  newest github version:
-	echo [93m%UpdateVer%[33m                      Discord@ [93m%DISCORD%[33m
+	echo %ColHigh%%UpdateVer%%ColOrange%                      Discord@ %ColHigh%%DISCORD%%ColOrange%
 echo.	
-echo _____________________________________________________________________
-echo -[93m[ Y/N/ HELP / GIT / UNINSTALL ][33m------------[93m[ Hit ENTER to reload. ][33m-
+echo  _____________________________________________________________________
+echo  -%ColHigh%[ Y/N/ HELP / GIT / UNINSTALL ]%ColOrange%------------%ColHigh%[ Hit ENTER to reload. ]%ColOrange%-
 SET choice=
-SET /p choice=Command[93m : 
+SET /p choice=Command%ColHigh% : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yes
@@ -263,32 +257,27 @@ SET /p choice=Command[93m :
 ::   ---------------------------------------------------------------------
 
 :Uninst
-[33m
+%ColOrange%
 taskkill /IM hl2.exe /F
 for %%I in ("%~dp0.") do for %%J in ("%%~dpI.") do set ParentFolderName=%%~dpnxJ
 rmdir /S /Q "%ParentFolderName%\OrangeHUD-main" 9<"%~f0" 2>nul 
 cls
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
-echo _____________________________________________________________________    
-echo _________________ [93mOHUD UNINSTALLATION SUCCESSFUL[33m ____________________
-echo ---------------------------------------------------------------------
+call :ASCIILOGO   
+echo  _________________ %ColHigh%OHUD UNINSTALLATION SUCCESSFUL%ColOrange% ____________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
 echo.
-echo                         [32mProccess Finished.[33m
+echo                         [32mProccess Finished.%ColOrange%
 
 echo.
 echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________
+echo  ---------------------------------------------------------------------
 ECHO  Press ENTER to go back to start, or click X to close.
 del "UpdateLogIN.txt" /s /f /q 2>nul >nul
 pause >nul
@@ -345,31 +334,24 @@ for %%I in (
 ::   ---------------------------------------------------------------------
 
 :updatefinished
-[33m
+%ColOrange%
 cls
-
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
-
-echo _____________________________________________________________________    
-echo _____________________ [93mOHUD UPDATE SUCCESSFUL[33m ________________________
-echo ---------------------------------------------------------------------
+call :ASCIILOGO    
+echo  _____________________ %ColHigh%OHUD UPDATE SUCCESSFUL%ColOrange% ________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
 echo.
-echo                         [32mProccess Finished.[33m
+echo                         [32mProccess Finished.%ColOrange%
 
 echo.
 echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________
+echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
@@ -400,33 +382,27 @@ GOTO %startfunc%
 ::   ---------------------------------------------------------------------
 
 :Resources
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
-
-echo _____________________________________________________________________    
-echo _____________________ [93mOHUD UPDATE SUCCESSFUL[33m ________________________
-echo ---------------------------------------------------------------------
+call :ASCIILOGO   
+echo  _____________________ %ColHigh%OHUD UPDATE SUCCESSFUL%ColOrange% ________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
-echo             [31mpsd files and other materials created for for hud.[33m
-echo                 [31mTHESE FILES HAVE NOT BEEN SET UP YET[33m
+echo             [31mpsd files and other materials created for for hud.%ColOrange%
+echo                 [31mTHESE FILES HAVE NOT BEEN SET UP YET%ColOrange%
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo -[93m[ Y/N/ HELP ][33m-------------------------------------------------------
+echo  _____________________________________________________________________
+echo  -%ColHigh%[ Y/N/ HELP ]%ColOrange%-------------------------------------------------------
 echo %height% 2>nul >nul
 
 
 SET choice=
-SET /p choice=Proceed?[93m : 
+SET /p choice=Proceed?%ColHigh% : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO %startfunc%
@@ -452,29 +428,24 @@ SET /p choice=Proceed?[93m :
 ::   ---------------------------------------------------------------------
 
 :no
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
-
-echo _____________________________________________________________________    
-echo ______________________ [93mOHUD UPDATE CANCELLED[33m ________________________
-echo ---------------------------------------------------------------------
+call :ASCIILOGO
+   
+echo  ______________________ %ColHigh%OHUD UPDATE CANCELLED%ColOrange% ________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
 echo.
-echo                         [31mProccess Cancelled.[33m
+echo                         [31mProccess Cancelled.%ColOrange%
 echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________
+echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
@@ -499,33 +470,28 @@ exit
 ::   ---------------------------------------------------------------------
 
 :help
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
-
-echo _____________________________________________________________________    
-echo _____________________________ [93mOHUD HELP[33m _____________________________
-echo ---------------------------------------------------------------------
+call :ASCIILOGO
+    
+echo  _____________________________ %ColHigh%OHUD HELP%ColOrange% _____________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo  Commands                         I
 echo                                   I
-echo    Resources: ............. [93mR[33m     I   ..........................
-echo    Github: ................ [93mG[33m     I   ..........................
-echo    Quit: .................. [93mQ[33m     I   ..........................
-echo    Back: .................. [93mB[33m     I   ..........................
-echo    Scan where tf2 + ins ... [93mDIRQ[33m  I   ..........................
-echo    Reload ver file......... [93mRL[33m    I   ..........................
+echo    Resources: ............. %ColHigh%R%ColOrange%     I   ..........................
+echo    Github: ................ %ColHigh%G%ColOrange%     I   ..........................
+echo    Quit: .................. %ColHigh%Q%ColOrange%     I   ..........................
+echo    Back: .................. %ColHigh%B%ColOrange%     I   ..........................
+echo    Scan where tf2 + ins ... %ColHigh%DIRQ%ColOrange%  I   ..........................
+echo    Reload ver file......... %ColHigh%RL%ColOrange%    I   ..........................
 echo                                   I  
-echo _____________________________________________________________________
-echo -------------------------------------------[93m[ Hit ENTER to go back. ][33m-
+echo  _____________________________________________________________________
+echo  -------------------------------------------%ColHigh%[ Hit ENTER to go back. ]%ColOrange%-
 echo %height% 2>nul >nul
 SET choice=
-SET /p choice=Command[93m : 
+SET /p choice=Command%ColHigh% : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	
@@ -579,18 +545,14 @@ SET /p choice=Command[93m :
 )
 
 :startinstalstate
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
+call :ASCIILOGO
 
-echo _____________________________________________________________________    
-echo ___________________________ [93mOHUD INSTALLER[33m __________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________    
+echo  ___________________________ %ColHigh%OHUD INSTALLER%ColOrange% __________________________
+echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul  
 
 ::shortened directory echo
@@ -615,19 +577,19 @@ for /D %%I in ("%~dp0."
 	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer3=%%h
 )
 
-	echo  [93m[ Y / N ][33m Select custom folder.
-	echo  [93m[ DIRQ ][33m to Automatically check TF2 dir.
-	echo  [93m[ GIT ][33m for Github.
-	echo  [93m[ HELP ][33m for help menu.
+	echo  %ColHigh%[ Y / N ]%ColOrange% Select custom folder.
+	echo  %ColHigh%[ DIRQ ]%ColOrange% to Automatically check TF2 dir.
+	echo  %ColHigh%[ GIT ]%ColOrange% for Github.
+	echo  %ColHigh%[ HELP ]%ColOrange% for help menu.
 	echo.
 	echo  newest github version:
-	echo [93m%UpdateVer3%[33m                      Discord@ [93m%DISCORD%[33m
+	echo %ColHigh%%UpdateVer3%%ColOrange%                      Discord@ %ColHigh%%DISCORD%%ColOrange%
 	
 
-echo _____________________________________________________________________
-echo -[93m[ Y/N/ DIRQ / GIT / HELP ][33m-----------------[93m[ Hit ENTER to reload. ][33m-
+echo  _____________________________________________________________________
+echo  -%ColHigh%[ Y/N/ DIRQ / GIT / HELP ]%ColOrange%-----------------%ColHigh%[ Hit ENTER to reload. ]%ColOrange%-
 SET choice=
-SET /p choice=Command[93m : 
+SET /p choice=Command%ColHigh% : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yesINSTALL
@@ -660,30 +622,26 @@ SET /p choice=Command[93m :
 
 
 :dirquery
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
+call :ASCIILOGO
 
-echo _____________________________________________________________________    
-echo ____________________ [93mSEARCHING FOR TF2 INSTALL[33m ______________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________    
+echo  ____________________ %ColHigh%SEARCHING FOR TF2 INSTALL%ColOrange% ______________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
 echo.
-echo                  [93mPlease wait, this may take a while.[33m
+echo                  %ColHigh%Please wait, this may take a while.%ColOrange%
 echo.
 echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________
+echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 
 @echo off&setlocal
@@ -705,35 +663,31 @@ pause
 
 
 :dirqinstall
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
+call :ASCIILOGO
 
-echo _____________________________________________________________________    
-echo __________________________ [93mINSTALLING OHUD[33m  _________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________    
+echo  __________________________ %ColHigh%INSTALLING OHUD%ColOrange%  _________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
 
 echo.
 echo  Install to Found Directory?:
-echo  [93m%_fpath%\tf\custom[33m 
+echo  %ColHigh%%_fpath%\tf\custom%ColOrange% 
 
 echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo -[93m[ Y/N ][33m-----------------------------------[93m[ Hit ENTER to go back. ][33m-
+echo  _____________________________________________________________________
+echo  -%ColHigh%[ Y/N ]%ColOrange%-----------------------------------%ColHigh%[ Hit ENTER to go back. ]%ColOrange%-
 
 SET choice=
-SET /p choice=Proceed?[93m : 
+SET /p choice=Proceed?%ColHigh% : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO ZDIRQINSTALLyes
@@ -749,18 +703,14 @@ powershell -Command Expand-Archive -LiteralPath '%cd%\OHUD.zip' -DestinationPath
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 
 
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
+call :ASCIILOGO
 
-echo _____________________________________________________________________    
-echo ____________________ [93mOHUD INSTALLATION FINISHED[33m _____________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________    
+echo  ____________________ %ColHigh%OHUD INSTALLATION FINISHED%ColOrange% _____________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
@@ -776,13 +726,13 @@ findstr /m "UpdateVer" "UpdateLog.txt"2>nul >nul
 if %errorlevel%==0 (
 for /f "tokens=1,* delims=:" %%a in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer=%%b
 for /f "tokens=* delims= " %%c in ("!UpdateVer!") do set UpdateVer=%%c
-echo Version: [32m!UpdateVer![33m
+echo Version: [32m!UpdateVer!%ColOrange%
 )
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________
+echo  ---------------------------------------------------------------------
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 MOVE /y "UpdateLog.txt" "%_fpath%\OrangeHUD-main\UpdateLogIN.txt"2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
@@ -829,30 +779,26 @@ EXIT
 
 :yesINSTALL
 :selectlocation
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
+call :ASCIILOGO
 
-echo _____________________________________________________________________    
-echo __________________________ [93mINSTALLING OHUD[33m  _________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________    
+echo  __________________________ %ColHigh%INSTALLING OHUD%ColOrange%  _________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
 echo.
-echo          [93mSelect custom folder in Team Fortress 2 Directory.[33m
+echo          %ColHigh%Select custom folder in Team Fortress 2 Directory.%ColOrange%
 echo.
 echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________
+echo  ---------------------------------------------------------------------
 
 SET FOLDER=%%Q
 SET "PScommand="POWERSHELL Add-Type -AssemblyName System.Windows.Forms; $FolderBrowse = New-Object System.Windows.Forms.OpenFileDialog -Property @{ValidateNames = $false;CheckFileExists = $false;RestoreDirectory = $true;FileName = 'Selected Folder';};$null = $FolderBrowse.ShowDialog();$FolderName = Split-Path -Path $FolderBrowse.FileName;Write-Output $FolderName""
@@ -863,15 +809,11 @@ FOR /F "usebackq tokens=*" %%Q in (`%PScommand%`) DO (
 :confirmselectedpath
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
+call :ASCIILOGO
 
-echo _____________________________________________________________________    
-echo __________________________ [93mINSTALLING OHUD[33m  _________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________    
+echo  __________________________ %ColHigh%INSTALLING OHUD%ColOrange%  _________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
@@ -879,7 +821,7 @@ echo.
 echo  Selected Path:
 
 
-echo  [93m%_fpath%[33m
+echo  %ColHigh%%_fpath%%ColOrange%
 	IF "%_fpath%" == ""  GOTO startinstalstate
 )
 
@@ -889,10 +831,10 @@ echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo -[93m[ Y/N ][33m-------------------------------------------------
+echo  _____________________________________________________________________
+echo  -%ColHigh%[ Y/N ]%ColOrange%-------------------------------------------------
 SET choice=
-SET /p choice=Proceed?[93m : 
+SET /p choice=Proceed?%ColHigh% : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 	IF '%choice%'=='Y' GOTO yesSELECT
@@ -961,29 +903,25 @@ exit
 
 
 :noINSTALL
-[33m
+%ColOrange%
 cls
 
-for /f "usebackq eol= tokens=* delims= " %%a in (`findstr /n ^^^^ "%TXTECHO%"`) do (
-    set line=%%a
-    set "line=!line:*:=!"
-    echo(!line!
-)
+call :ASCIILOGO
 
-echo _____________________________________________________________________    
-echo _____________________ [93mOHUD INSTALL CANCELLED[33m ________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________    
+echo  _____________________ %ColHigh%OHUD INSTALL CANCELLED%ColOrange% ________________________
+echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
 echo.
-echo                         [31mProccess Cancelled.[33m
+echo                         [31mProccess Cancelled.%ColOrange%
 echo.
 echo.
 echo.
 echo.
-echo _____________________________________________________________________
-echo ---------------------------------------------------------------------
+echo  _____________________________________________________________________
+echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
@@ -992,3 +930,88 @@ Echo Exit: press any key.
 pause >nul
 :exit
 exit
+
+
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
+:ASCIILOGO
+::BG MAIN
+SET R=247
+SET G=128
+SET B=42
+
+::FG LOGO
+SET FR=84
+SET FG=44
+SET FB=16   
+
+::FG HIGHLIGHTS
+SET FER=122
+SET FEG=67
+SET FEB=28
+
+::BG AFTER LOGO
+SET AR=247
+SET AG=128
+SET AB=42
+
+SET /a XN=0
+
+FOR /F tokens^=* %%i in ('type %orange%
+')do set /a "_cnt+=1+0" && call set "_var!_cnt!=%%~i" 
+	) do (
+		call set /a XN+=!_cnt!
+		FOR /F "tokens=1-4 delims=$$" %%a in (%orange%
+	) do (
+		set "BG=%%a"
+		set "LOGO=%%b"
+		set "BG2=%%c"
+		
+		set FGA=[38;2;!FR!;!FG!;!FB!m
+		set FGC=[38;2;!FER!;!FEG!;!FEB!m
+		set NAMET=[38;2;98;51;16m
+		
+		::FOREGROUND LOGO EDGE FADE
+		SET /a FER+=8  && if !FER! LEQ 0 SET FER=0
+		SET /a FEG+=4  && if !FEG! LEQ 0 SET FEG=0
+		SET /a FEB+=1  && if !FEB! LEQ 0 SET FEB=0
+		if !FER! GTR 255 SET FER=255
+		if !FEG! GTR 128 SET FEG=128
+		if !FEB! GTR 42  SET FEB=42 
+		
+		::FOREGROUND LOGO FADE
+		SET /a FR+=7  && if !FR! LEQ 0 SET FR=0
+		SET /a FG+=4  && if !FG! LEQ 0 SET FG=0
+		SET /a FB+=1  && if !FB! LEQ 0 SET FB=0
+		if !FR! GTR 247 SET FR=247
+		if !FG! GTR 128 SET FG=128
+		if !FB! GTR 42 SET FB=42
+		
+		::BG COLOR FADE
+		SET /a R-=6  && if !R! LEQ 0 SET R=0
+		SET /a G+=3  && if !G! LEQ 0 SET G=0
+		SET /a B+=5  && if !B! LEQ 0 SET B=0
+		if !R! GTR 255 SET R=255
+		if !G! GTR 255 SET G=255
+		if !B! GTR 255 SET B=255
+		
+		::BG2 COLOR FADE AFTER LOGO
+		SET /a AR-=8  && if !AR! LEQ 0 SET AR=0
+		SET /a AG-=4  && if !AG! LEQ 0 SET AG=0
+		SET /a AB-=1  && if !AB! LEQ 0 SET AB=0
+		if !AR! GTR 255 SET AR=255
+		if !AG! GTR 255 SET AG=255
+		if !AB! GTR 255 SET AB=255
+		
+		::ECHO
+		call set LINE=[38;2;!R!;!G!;!B!m!BG![38;2;!FR!;!FG!;!FB!m!LOGO![38;2;!AR!;!AG!;!AB!m!BG2!
+		echo  !LINE!
+		
+		
+		:: highlight color
+		set ColHigh=[38;2;!R!;!G!;!B!m
+	)	
+)
+echo  [38;2;!R!;!G!;!B!m_____________________________________________________________________[38;2;247;128;42m
+chcp 1252 >nul

@@ -45,7 +45,7 @@ echo %height% 2>nul >nul
 	set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 	set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 	set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
-	set dlascii=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/Orange.txt
+	set dlascii=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/Orange.ini
 	
 	set orange=Orange.ini
 	set DISCORD=Orangeprint#1170

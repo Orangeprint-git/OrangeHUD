@@ -191,7 +191,7 @@ echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.%ColOrange%" > OHUDtemp.txt
 	echo ERR
 ) 
 
-
+echo.
 if %UpdateVer2% GEQ %UpdateVer% (
 	echo %ColHigh%%UpdateVer2% [32mUP TO DATE%ColOrange% 
 ) ELSE (
@@ -386,13 +386,15 @@ GOTO %startfunc%
 cls
 
 call :ASCIILOGO   
-echo  _____________________ %ColHigh%OHUD UPDATE SUCCESSFUL%ColOrange% ________________________
+echo  ____________________ %ColHigh%OHUD RESOURCES FOR MODDERS%ColOrange% _____________________
 echo  ---------------------------------------------------------------------
 echo.
 echo.
 echo.
-echo             [31mpsd files and other materials created for for hud.%ColOrange%
+echo.
+echo             [31mPSD files and other materials created for for hud.%ColOrange%
 echo                 [31mTHESE FILES HAVE NOT BEEN SET UP YET%ColOrange%
+echo.
 echo.
 echo.
 echo.

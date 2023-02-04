@@ -191,13 +191,14 @@ echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.%ColOrange%" > OHUDtemp.txt
 ) ELSE (
 	echo ERR
 ) 
-
+chcp 65001 >nul
 echo.
 if %UpdateVer2% GEQ %UpdateVer% (
-	echo %ColHigh%%UpdateVer2% [32mUP TO DATE%ColOrange% 
-) ELSE (
-	echo %ColHigh%%UpdateVer2% [31mOUTDATED%ColOrange%
+	echo %ColHigh%%UpdateVer2% [32m► UP TO DATE%ColOrange% 
+) ELSE (                              
+	echo %ColHigh%%UpdateVer2% [31m► OUTDATED%ColOrange%
 )
+chcp 1252 >nul
 
 :: Date and time of last installed version.
 for %%I in (

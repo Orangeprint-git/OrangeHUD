@@ -59,7 +59,7 @@ echo %height% 2>nul >nul
 	if %errorlevel%==0 (
 	echo.2>nul
 ) ELSE (
-	GOTO noconnection 
+	call :noconnection 
 	pause 
 )
    
@@ -100,16 +100,17 @@ IF EXIST %ParentFolderName%\OrangeHUD (
 :noconnection
 %ColOrange%
 cls
-call :ASCIILOGO
-echo  _____________________________________________________________________    
+call :ASCIILOGO 
 echo  _____________________________________________________________________ 
 echo  ---------------------------------------------------------------------
+echo.
 echo.
 echo.
 echo.
 echo                           [31mConnection error.%ColOrange%
 
 
+echo.
 echo.
 echo.
 echo.
@@ -251,7 +252,7 @@ SET /p choice=Command%ColHigh% :
 	IF '%choice%'=='install' GOTO startinstalstate
 	IF '%choice%'=='INSTALL' GOTO startinstalstate
 	IF '%choice%'=='uninstall' GOTO Uninst
-	IF '%choice%'=='UNINSTALL' GOTO :Uninst
+	IF '%choice%'=='UNINSTALL' GOTO Uninst
 	
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
@@ -552,7 +553,6 @@ cls
 
 call :ASCIILOGO
 
-echo  _____________________________________________________________________    
 echo  ___________________________ %ColHigh%OHUD INSTALLER%ColOrange% __________________________
 echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul  
@@ -628,8 +628,7 @@ SET /p choice=Command%ColHigh% :
 cls
 
 call :ASCIILOGO
-
-echo  _____________________________________________________________________    
+  
 echo  ____________________ %ColHigh%SEARCHING FOR TF2 INSTALL%ColOrange% ______________________
 echo  ---------------------------------------------------------------------
 echo.
@@ -708,8 +707,7 @@ del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 cls
 
 call :ASCIILOGO
-
-echo  _____________________________________________________________________    
+    
 echo  ____________________ %ColHigh%OHUD INSTALLATION FINISHED%ColOrange% _____________________
 echo  ---------------------------------------------------------------------
 echo.
@@ -785,7 +783,6 @@ cls
 
 call :ASCIILOGO
 
-echo  _____________________________________________________________________    
 echo  __________________________ %ColHigh%INSTALLING OHUD%ColOrange%  _________________________
 echo  ---------------------------------------------------------------------
 echo.
@@ -812,7 +809,6 @@ cls
 
 call :ASCIILOGO
 
-echo  _____________________________________________________________________    
 echo  __________________________ %ColHigh%INSTALLING OHUD%ColOrange%  _________________________
 echo  ---------------------------------------------------------------------
 echo.
@@ -908,8 +904,7 @@ exit
 cls
 
 call :ASCIILOGO
-
-echo  _____________________________________________________________________    
+    
 echo  _____________________ %ColHigh%OHUD INSTALL CANCELLED%ColOrange% ________________________
 echo  ---------------------------------------------------------------------
 echo.
@@ -936,21 +931,25 @@ exit
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
+:: ASCII COLOR FADE SPEIFICATIONS AND MATH
+:: ALSO HAS AQUA BLUE HIGHLIGHT COLOR
+
 :ASCIILOGO
+
 ::BG MAIN
 SET R=247
 SET G=128
 SET B=42
 
 ::FG LOGO
-SET FR=84
-SET FG=44
-SET FB=16   
+SET FR=154
+SET FG=90
+SET FB=26   
 
 ::FG HIGHLIGHTS
-SET FER=122
-SET FEG=67
-SET FEB=28
+SET FER=240
+SET FEG=150
+SET FEB=42
 
 ::BG AFTER LOGO
 SET AR=247
@@ -974,17 +973,17 @@ FOR /F tokens^=* %%i in ('type %orange%
 		set NAMET=[38;2;98;51;16m
 		
 		::FOREGROUND LOGO EDGE FADE
-		SET /a FER+=8  && if !FER! LEQ 0 SET FER=0
-		SET /a FEG+=4  && if !FEG! LEQ 0 SET FEG=0
-		SET /a FEB+=1  && if !FEB! LEQ 0 SET FEB=0
+		SET /a FER-=1  && if !FER! LEQ 0 SET FER=0
+		SET /a FEG-=1  && if !FEG! LEQ 0 SET FEG=0
+		SET /a FEB-=1  && if !FEB! LEQ 0 SET FEB=0
 		if !FER! GTR 255 SET FER=255
-		if !FEG! GTR 128 SET FEG=128
-		if !FEB! GTR 42  SET FEB=42 
+		if !FEG! GTR 170 SET FEG=170
+		if !FEB! GTR 72  SET FEB=72 
 		
 		::FOREGROUND LOGO FADE
-		SET /a FR+=7  && if !FR! LEQ 0 SET FR=0
-		SET /a FG+=4  && if !FG! LEQ 0 SET FG=0
-		SET /a FB+=1  && if !FB! LEQ 0 SET FB=0
+		SET /a FR+=5  && if !FR! LEQ 0 SET FR=0
+		SET /a FG+=3  && if !FG! LEQ 0 SET FG=0
+		SET /a FB+=2  && if !FB! LEQ 0 SET FB=0
 		if !FR! GTR 247 SET FR=247
 		if !FG! GTR 128 SET FG=128
 		if !FB! GTR 42 SET FB=42

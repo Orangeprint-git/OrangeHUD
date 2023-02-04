@@ -55,7 +55,7 @@ echo %height% 2>nul >nul
 	SET RLVER=
 	del "UpdateLog.txt" /s /f /q 2>nul >nul
 	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
-	powershell -Command "Invoke-WebRequest %dlascii% -Outfile Orange.txt">nul
+	powershell -Command "Invoke-WebRequest %dlascii% -Outfile Orange.ini">nul
 	if %errorlevel%==0 (
 	echo.2>nul
 ) ELSE (
@@ -669,8 +669,7 @@ pause
 cls
 
 call :ASCIILOGO
-
-echo  _____________________________________________________________________    
+   
 echo  __________________________ %ColHigh%INSTALLING OHUD%ColOrange%  _________________________
 echo  ---------------------------------------------------------------------
 echo.

@@ -8,7 +8,7 @@ SETLOCAL EnableDelayedExpansion
 ::		and version checker.
 ::
 ::		copyright CC:UL 1.0 you may edit and use this
-::		tool for anything; excenpt monetize it.
+::		tool for anything; except monetize it.
 ::
 ::
 ::   _____________________________________________________________________ 

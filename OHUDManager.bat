@@ -590,12 +590,12 @@ for /D %%I in ("%~dp0."
 	"%%~dpI."
  
 ) do set ParentFolderName=%%~dpnxJ
-	set "filename=%ParentFolderName%\OrangeHUD-main"
+	set "filename=%CD%"
 	For %%A in ("%filename%"
 
 ) do (
 	echo.
-	echo  %CD%
+	echo  %%~dA\...\%%~nxA\OHUDManager.bat
 	echo.
 )
 

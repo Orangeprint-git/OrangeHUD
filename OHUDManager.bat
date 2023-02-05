@@ -540,7 +540,7 @@ SET /p choice=Command%ColHigh% :
 
 :startinstalstatevererr
 	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
-	powershell -Command "Invoke-WebRequest %dlascii% -Outfile Orange.txt">nul
+	powershell -Command "Invoke-WebRequest %dlascii% -Outfile Orange.ini">nul
 	if %errorlevel%==0 (
 	echo.2>nul
 ) ELSE (
@@ -736,7 +736,7 @@ echo  ---------------------------------------------------------------------
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 MOVE /y "UpdateLog.txt" "%_fpath%\OrangeHUD-main\UpdateLogIN.txt"2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
-del "Orange.txt" /s /f /q 2>nul >nul
+del "Orange.ini" /s /f /q 2>nul >nul
 del "OHUD.zip" /s /f /q 2>nul >nul
 
 FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
@@ -867,7 +867,7 @@ goto unpack
 	echo %height% 2>nul >nul
 	MOVE /y "UpdateLog.txt" "%_fpath%\OrangeHUD-main\UpdateLogIN.txt"2>nul >nul
 	del "UpdateLog.txt" /s /f /q 2>nul >nul
-	del "Orange.txt" /s /f /q 2>nul >nul
+	del "Orange.ini" /s /f /q 2>nul >nul
 	del "OHUDtemp.txt" /s /f /q 2>nul >nul
 	del "OHUD.zip" /s /f /q 2>nul >nul
 	
@@ -922,7 +922,7 @@ echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
-del "Orange.txt" /s /f /q 2>nul >nul
+del "Orange.ini" /s /f /q 2>nul >nul
 Echo Exit: press any key.
 pause >nul
 :exit
@@ -948,9 +948,9 @@ SET FG=90
 SET FB=26   
 
 ::FG HIGHLIGHTS
-SET FER=240
-SET FEG=150
-SET FEB=42
+SET FER=250
+SET FEG=160
+SET FEB=62
 
 ::BG AFTER LOGO
 SET AR=247

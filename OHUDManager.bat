@@ -191,14 +191,13 @@ echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.%ColOrange%" > OHUDtemp.txt
 ) ELSE (
 	echo ERR
 ) 
-chcp 65001 >nul
+
 echo.
 if %UpdateVer2% GEQ %UpdateVer% (
-	echo %ColHigh%%UpdateVer2% [32m► UP TO DATE%ColOrange% 
-) ELSE (                              
-	echo %ColHigh%%UpdateVer2% [31m► OUTDATED%ColOrange%
+	echo %ColHigh%%UpdateVer2% [32mUP TO DATE%ColOrange% 
+) ELSE (
+	echo %ColHigh%%UpdateVer2% [31mOUTDATED%ColOrange%
 )
-chcp 1252 >nul
 
 :: Date and time of last installed version.
 for %%I in (
@@ -540,7 +539,7 @@ SET /p choice=Command%ColHigh% :
 
 :startinstalstatevererr
 	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt">nul
-	powershell -Command "Invoke-WebRequest %dlascii% -Outfile Orange.ini">nul
+	powershell -Command "Invoke-WebRequest %dlascii% -Outfile Orange.txt">nul
 	if %errorlevel%==0 (
 	echo.2>nul
 ) ELSE (
@@ -580,10 +579,10 @@ for /D %%I in ("%~dp0."
 	for /f "tokens=1,* delims=:" %%g in ('findstr "UpdateVer" "UpdateLog.txt"') do set UpdateVer3=%%h
 )
 
-	echo  %ColHigh%[ Y / N ]%ColOrange% Select custom folder.
-	echo  %ColHigh%[ DIRQ ]%ColOrange% to Automatically check TF2 dir.
-	echo  %ColHigh%[ GIT ]%ColOrange% for Github.
-	echo  %ColHigh%[ HELP ]%ColOrange% for help menu.
+	echo  %ColHigh%[ Y / N ]%ColOrange% Install OrangeHUD.
+	echo  %ColHigh%[ Custom ]%ColOrange% Select custom location to install.
+	echo  %ColHigh%[ GIT ]%ColOrange% Github.
+	echo  %ColHigh%[ HELP ]%ColOrange% help menu.
 	echo.
 	echo  newest github version:
 	echo %ColHigh%%UpdateVer3%%ColOrange%                      Discord@ %ColHigh%%DISCORD%%ColOrange%
@@ -595,13 +594,13 @@ SET choice=
 SET /p choice=Command%ColHigh% : 
 
 	IF NOT '%choice%'=='' SET choice=%choice:~0,1%
-	IF '%choice%'=='Y' GOTO yesINSTALL
-	IF '%choice%'=='y' GOTO yesINSTALL
+	IF '%choice%'=='Y' GOTO dirquery
+	IF '%choice%'=='y' GOTO dirquery
 	IF '%choice%'=='N' GOTO noINSTALL
 	IF '%choice%'=='n' GOTO noINSTALL
 	
-	IF '%choice%'=='dirq' GOTO dirquery
-	IF '%choice%'=='DIRQ' GOTO dirquery
+	IF '%choice%'=='custom' GOTO yesINSTALL
+	IF '%choice%'=='CUSTOM' GOTO yesINSTALL
 	
 	IF '%choice%'=='select' GOTO selectlocation
 	IF '%choice%'=='SELECT' GOTO selectlocation
@@ -736,7 +735,7 @@ echo  ---------------------------------------------------------------------
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 MOVE /y "UpdateLog.txt" "%_fpath%\OrangeHUD-main\UpdateLogIN.txt"2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
-del "Orange.ini" /s /f /q 2>nul >nul
+del "Orange.txt" /s /f /q 2>nul >nul
 del "OHUD.zip" /s /f /q 2>nul >nul
 
 FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
@@ -867,7 +866,7 @@ goto unpack
 	echo %height% 2>nul >nul
 	MOVE /y "UpdateLog.txt" "%_fpath%\OrangeHUD-main\UpdateLogIN.txt"2>nul >nul
 	del "UpdateLog.txt" /s /f /q 2>nul >nul
-	del "Orange.ini" /s /f /q 2>nul >nul
+	del "Orange.txt" /s /f /q 2>nul >nul
 	del "OHUDtemp.txt" /s /f /q 2>nul >nul
 	del "OHUD.zip" /s /f /q 2>nul >nul
 	
@@ -922,7 +921,7 @@ echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 del "UpdateLog.txt" /s /f /q 2>nul >nul
-del "Orange.ini" /s /f /q 2>nul >nul
+del "Orange.txt" /s /f /q 2>nul >nul
 Echo Exit: press any key.
 pause >nul
 :exit
@@ -948,9 +947,9 @@ SET FG=90
 SET FB=26   
 
 ::FG HIGHLIGHTS
-SET FER=250
-SET FEG=160
-SET FEB=62
+SET FER=240
+SET FEG=150
+SET FEB=42
 
 ::BG AFTER LOGO
 SET AR=247

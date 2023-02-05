@@ -14,12 +14,12 @@ SETLOCAL EnableDelayedExpansion
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
-::Launch defs
+:: Window title
 title OHUD Manager
-color 06
 
 
-:: highlight color is calculated from the logo ASCII at the bottom.
+:: main color of orange used in this tool.
+:: note that the highlight color is calculated from the ASCII logo defs at the bottom.
 set ColOrange=[38;2;247;128;42m
 
 
@@ -41,7 +41,7 @@ echo %height% 2>nul >nul
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 
-:: links
+:: links and files
 	set gitlink=https://github.com/Orangeprint-git/OrangeHUD.git
 	set dllink=https://github.com/Orangeprint-git/OrangeHUD/archive/refs/heads/main.zip 
 	set dllog=https://raw.githubusercontent.com/Orangeprint-git/OrangeHUD/main/UpdateLog.txt
@@ -49,7 +49,13 @@ echo %height% 2>nul >nul
 	
 	set orange=Orange.ini
 	set DISCORD=Orangeprint#1170
-	
+
+
+
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
+:: Connection error check.
 :conerr
 :: Update version check
 	SET RLVER=
@@ -74,9 +80,10 @@ echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.%ColOrange%" > OHUDtemp.txt
 	set ULIN=OHUDtemp.txt
 )
 
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
-
-:: if hud install not found make window into install state
+:: if hud install not found in current folder make window into install state
 
 for /D %%I in ("%~dp0."
 ) do for %%J in (
@@ -192,6 +199,9 @@ echo  UpdateVer: ERR:"[31mUpdateLogIN.txt not found.%ColOrange%" > OHUDtemp.txt
 	echo ERR
 ) 
 
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
 echo.
 if %UpdateVer2% GEQ %UpdateVer% (
 	echo %ColHigh%%UpdateVer2% [32mUP TO DATE%ColOrange% 
@@ -289,18 +299,27 @@ GOTO %startfunc%
 :WindowSizecommand
 	echo %height% 2>nul >nul
 	GOTO startcls
+	
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :rvd
 SETLOCAL EnableDelayedExpansion
 	powershell -Command "Invoke-WebRequest %dllog% -Outfile UpdateLog.txt"
 	echo %height% 2>nul >nul
 	GOTO startcls
+	
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 
 :git
 	start "" %gitlink%
 	echo %height%
 	goto startcls
+	
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :yes
 @echo off
@@ -311,6 +330,9 @@ FOR /F %%x IN ('tasklist /NH /FI "IMAGENAME eq %EXE%"') DO IF NOT %%x == %EXE% (
 ) ELSE (
   GOTO Running
 )
+
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
 
 :Running
 	taskkill /IM hl2.exe /F>NUL
@@ -429,6 +451,10 @@ SET /p choice=Proceed?%ColHigh% :
 
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
+
+
+
+
 
 :no
 %ColOrange%
@@ -645,6 +671,9 @@ IF EXIST %_fpath%tf\custom\OrangeHUD-main (
 GOTO dirqinstall
 pause
 
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
 
 :dirqinstall
 %ColOrange%
@@ -724,6 +753,11 @@ del "OHUD.zip" /s /f /q 2>nul >nul
 FOR /F "usebackq tokens=3*" %%A IN (`REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440" /v InstallLocation`) DO (
     set TF2DIR=%%A %%B
 )
+
+::   _____________________________________________________________________ 
+::   ---------------------------------------------------------------------
+
+:: Makes a shortcut to desktop after install
 
 cd %TF2DIR%\tf\custom\OrangeHUD-main
 echo Set oWS = WScript.CreateObject("WScript.Shell") > OHUDManager.vbs

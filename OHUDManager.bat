@@ -626,23 +626,6 @@ SET /p choice=Command%ColHigh% :
 :dirquery
 %ColOrange%
 cls
-
-call :ASCIILOGO
-  
-echo  ____________________ %ColHigh%SEARCHING FOR TF2 INSTALL%ColOrange% ______________________
-echo  ---------------------------------------------------------------------
-echo.
-echo.
-echo.
-echo.
-echo                  %ColHigh%Please wait, this may take a while.%ColOrange%
-echo.
-echo.
-echo.
-echo.
-echo.
-echo  _____________________________________________________________________
-echo  ---------------------------------------------------------------------
 echo %height% 2>nul >nul
 
 @echo off&setlocal

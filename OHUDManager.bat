@@ -4,11 +4,11 @@ SETLOCAL EnableDelayedExpansion
 ::   _____________________________________________________________________ 
 ::   ---------------------------------------------------------------------
 ::
-::				DESCRIPTION
+::				OrangeHUD installer and updater, uninstaller
+::				and version checker.
 ::
-::
-::
-::
+::				copyright CC:UL 1.0 you may edit and use this
+::				tool for anything; excenpt monetize it.
 ::
 ::
 ::   _____________________________________________________________________ 

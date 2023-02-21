@@ -406,7 +406,7 @@ set fld=%TF2DIR%\tf\custom\OrangeHUD-main
 set ico=%fld%\Folder.ico
 (
 echo [.ShellClassInfo]
-echo IconResource=Folder.ico,0
+echo IconResource=%fld%Folder.ico,0
 echo [ViewState]
 echo Mode=
 echo Vid=

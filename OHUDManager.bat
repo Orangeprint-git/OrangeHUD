@@ -414,7 +414,8 @@ echo FolderType=Generic
 ) > "%fld%\desktop.ini"
 attrib +h +s -a "%fld%\desktop.ini"
 attrib +r "%fld%"
-attrib +h "%fld%\icons"
+attrib +h "%fld%\Folder.ico"
+attrib +h "%fld%\Orangeprint.ico"
 
 GOTO %startfunc%
 
@@ -932,7 +933,8 @@ echo FolderType=Generic
 ) > "%fld%\desktop.ini"
 attrib +h +s -a "%fld%\desktop.ini"
 attrib +r "%fld%"
-attrib +h "%fld%\icons"
+attrib +h "%fld%\Folder.ico"
+attrib +h "%fld%\Orangeprint.ico"
 
 
 

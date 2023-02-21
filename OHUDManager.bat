@@ -402,6 +402,20 @@ echo oLink.Save >> OHUDManager.vbs
 cscript OHUDManager.vbs>nul
 del OHUDManager.vbs
 
+set fld=%TF2DIR%\tf\custom\OrangeHUD-main
+set ico=%fld%\Folder.ico
+(
+echo [.ShellClassInfo]
+echo IconResource=Folder.ico,0
+echo [ViewState]
+echo Mode=
+echo Vid=
+echo FolderType=Generic
+) > "%fld%\desktop.ini"
+attrib +h +s -a "%fld%\desktop.ini"
+attrib +r "%fld%"
+attrib +h "%fld%\icons"
+
 GOTO %startfunc%
 
 ::   _____________________________________________________________________ 

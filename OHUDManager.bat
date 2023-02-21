@@ -379,6 +379,7 @@ echo %height% 2>nul >nul
 del "%~dp0\OHUD.zip" /s /f /q 2>nul >nul
 del "OHUDtemp.txt" /s /f /q 2>nul >nul
 MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
+attrib +h +r UpdateLogIN.txt
 del "UpdateLog.txt" /s /f /q 2>nul >nul
 ECHO  Press ENTER to go back to start, or click X to close.
 pause >nul

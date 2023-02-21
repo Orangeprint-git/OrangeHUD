@@ -381,6 +381,8 @@ del "OHUDtemp.txt" /s /f /q 2>nul >nul
 MOVE /y "UpdateLog.txt" "UpdateLogIN.txt"2>nul >nul
 attrib +h +r UpdateLogIN.txt
 del "UpdateLog.txt" /s /f /q 2>nul >nul
+
+
 ECHO  Press ENTER to go back to start, or click X to close.
 pause >nul
 
@@ -903,6 +905,20 @@ echo oLink.IconLocation = "%TF2DIR%\tf\custom\OrangeHUD-main\Orangeprint.ico" >>
 echo oLink.Save >> OHUDManager.vbs
 cscript OHUDManager.vbs>nul
 del OHUDManager.vbs
+
+set fld=%TF2DIR%\tf\custom\OrangeHUD-main
+set ico=%fld%\Folder.ico
+(
+echo [.ShellClassInfo]
+echo IconResource=Folder.ico,0
+echo [ViewState]
+echo Mode=
+echo Vid=
+echo FolderType=Generic
+) > "%fld%\desktop.ini"
+attrib +h +s -a "%fld%\desktop.ini"
+attrib +r "%fld%"
+attrib +h "%fld%\icons"
 
 
 

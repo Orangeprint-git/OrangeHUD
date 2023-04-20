@@ -1,0 +1,30 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui/replay/thumbnails/detail/medic_crosshair_detail"
+	"$vertexcolor"		"1"
+	"$no_fullbright"	"1"
+	"$vertexalpha"		"1"
+	"$ignorez"			"1"
+	"$translucent" 		"1"
+	"$angle" 0.0
+	"$translate" "[0.0 0.0]"
+	"$center" "[0.5 0.5]"
+
+	"Proxies"
+	{
+		"LinearRamp"
+		{
+			"rate" 45
+			"initialValue" 0.0
+			"resultVar" "$angle"
+		}
+
+		"TextureTransform"
+		{
+			"translateVar" "$translate"
+			"rotateVar" "$angle"
+			"centerVar" "$center"
+			"resultVar" "$basetexturetransform"
+		}
+	}
+}
